@@ -2,15 +2,18 @@ import numpy as np
 
 from manim import (
     Scene, Create, VGroup,
-    Circle, Square, Text, SVGMobject, ImageMobject, Rectangle,
-    FadeIn, Transform, FadeOut, Create, AnimationGroup, Succession, Write,
-    WHITE, BLACK, ManimColor,
+    Circle, Square, Text, SVGMobject, ImageMobject, Rectangle, CubicBezier, Tex,
+    Line, Dot, NumberLine, ValueTracker, Vector, DashedLine, Arrow, StealthTip,
+    RoundedRectangle,
+    FadeIn, Transform, FadeOut, Create, AnimationGroup, Succession, Write, Uncreate,
+    MoveToTarget, ReplacementTransform,
+    WHITE, BLACK, ManimColor, BLUE, RED, GRAY,
     DOWN, LEFT, RIGHT, UP, ORIGIN,
 )
 from manim_slides import Slide
 
 from particles import create_circles, get_electron, get_nucleus, get_nucleus_text, \
-    get_electron_text
+    get_electron_text, get_atom
 from periodic_table import generate_periodic_table, get_element
 
 
@@ -184,12 +187,262 @@ class PeriodicTable(Slide):
         self.next_slide()
 
 
-class Second(Slide):
+class Masses(Slide):
 
     def construct(self):
-        square = Square()
-        square.rotate(np.pi / 4)
-        square.arrange(DOWN)
+        positions = 2 * np.array([
+            [-0.1, 0.3, 0],
+            [0.7, 0.5, 0],
+            [-0.2, 0.7, 0],
+            [0.94, 0.1, 0],
+        ])
+        positions += np.array([-4, 1.0, 0])
+        left = get_atom(label='H').scale(0.8).move_to(positions[2])
+        right = get_atom(label='H').scale(0.8).move_to(positions[3])
+        self.play(FadeIn(left), FadeIn(right))
+        self.next_slide()
 
-        self.play(Create(square))
+        electrons = [get_electron().move_to(p) for p in positions[:2]]
+        nuclei = [get_nucleus().move_to(p).scale(0.7) for p in positions[2:]]
+        kwargs = dict(
+            fill_color=WHITE,
+            stroke_color=WHITE,
+            fill_opacity=0.0,
+            stroke_opacity=1.0,
+            stroke_width=2,
+            radius=1.1,
+        )
+        circles = [Circle(**kwargs).move_to(n.get_center()) for n in nuclei]
+        left_ = VGroup(nuclei[0], electrons[0], circles[0])
+        right_ = VGroup(nuclei[1], electrons[1], circles[1])
+        self.play(
+            ReplacementTransform(left, left_),
+            ReplacementTransform(right, right_),
+        )
+        self.play(*[FadeOut(c) for c in circles])
+        self.next_slide()
+
+        lines = []
+        cover = 0.5
+        for i in range(len(positions)):
+            for j in range(i + 1, len(positions)):
+                a = positions[i]
+                b = positions[j]
+                line = DashedLine(
+                    a + 0.2 * (b - a),
+                    b - 0.2 * (b - a),
+                    stroke_color=WHITE,
+                    stroke_width=1.0,
+                )
+                lines.append(line)
+
+        at = np.mean(positions, axis=0) + 5 * RIGHT + 0.4 * UP
+        coulomb = Text(
+            "electrostatics",
+            font='Open Sans',
+            font_size=250,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+            weight="BOLD",
+        ).scale(0.1).move_to(at)
+        tex = Tex(r"$E_{\text{\sffamily Coulomb}} \sim \frac{1}{r}$").next_to(coulomb, DOWN)
+
+        animation = AnimationGroup(
+            FadeIn(coulomb, run_time=0.5),
+            Write(tex, run_time=0.5),
+        )
+        self.play(animation)
+        self.play(Succession([FadeIn(l) for l in lines]), run_time=1)
+        self.next_slide()
+
+        axis_mobjects = []
+        axis_size = 13
+        axis = Arrow(
+            start=np.array([-axis_size / 2, -2, 0]),
+            end=np.array([axis_size / 2, -2, 0]),
+            tip_shape=StealthTip,
+            stroke_width=2.5,
+            tip_length=0.2,
+        )
+        label = Text(
+            "mass",
+            font='Open Sans',
+            font_size=200,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+            weight="BOLD",
+        ).scale(0.1).move_to(axis.get_end()).shift(0.5 * DOWN)
+        self.play(Create(axis), FadeIn(label))
+        self.next_slide()
+        axis_mobjects += [axis, label]
+
+        tick_animations = []
+        length = np.linalg.norm(axis.get_start() - axis.get_end())
+        scale = 0.90 * length / 32
+        dot = Dot(np.array([0, 0, 0]) + axis.get_start())
+        label = Text(
+            "1 g",
+            font='Open Sans',
+            font_size=200,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1)
+        label.next_to(dot, 0.5 * UP)
+        droplet = SVGMobject('images/droplet.svg').move_to(axis.get_start() + 0.5 * DOWN)
+        droplet.scale(0.3)
+        anim = AnimationGroup(
+            FadeIn(dot),
+            FadeIn(droplet),
+            Write(label),
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [dot, droplet, label]
+
+        dot = Dot(np.array([scale * 4, 0, 0]) + axis.get_start())
+        label = Text(
+            "0.1 mg",
+            font='Open Sans',
+            font_size=200,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+            # weight="BOLD",
+        ).scale(0.1)
+        label.next_to(dot, 0.5 * UP)
+        salt = SVGMobject('images/salt.svg').scale(0.3).move_to(dot.get_center() + 0.5 * DOWN)
+        anim = AnimationGroup(
+            FadeIn(dot),
+            FadeIn(salt),
+            Write(label),
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [dot, salt, label]
+
+        dot = Dot(np.array([scale * 15, 0, 0]) + axis.get_start())
+        label = Text(
+            "0.5 fg",
+            font='Open Sans',
+            font_size=200,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1)
+        label.next_to(dot, 0.5 * UP)
+        covid = SVGMobject('images/covid.svg').scale(0.3).move_to(dot.get_center() + 0.5 * DOWN)
+        anim = AnimationGroup(
+            FadeIn(dot),
+            FadeIn(covid),
+            Write(label),
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [dot, covid, label]
+
+        highlight = RoundedRectangle(
+            color=WHITE,
+            fill_opacity=1.0,
+            stroke_opacity=1.0,
+            height=0.10,
+            width=scale * 2,  # 2 powers
+            corner_radius=0.05,
+        ).move_to(np.array([scale * 24, 0, 0]) + axis.get_start())
+        label = Tex(r"$\text{\sffamily 10}^{\text{\sffamily -" + str(24) +
+                            r" }}\text{\sffamily g}$").next_to(highlight, 0.5 * UP).scale(0.7).shift(0.12 * RIGHT)
+        nucleus = get_nucleus().next_to(highlight, 0.5 *
+                                                           DOWN).scale(0.9)
+        anim = AnimationGroup(
+            FadeIn(highlight),
+            FadeIn(nucleus),
+            Write(label),
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [highlight, nucleus, label]
+
+        dot = Dot(np.array([scale * 28, 0, 0]) + axis.get_start())
+        label = Tex(r"$\text{\sffamily 10}^{\text{\sffamily -" + str(28) +
+                            r" }}\text{\sffamily g}$").next_to(dot, 0.5 * UP).scale(0.7).shift(0.12 * RIGHT)
+        label.next_to(dot, 0.5 * UP)
+        electron = get_electron().next_to(dot, 0.5 * DOWN)
+        anim = AnimationGroup(
+            FadeIn(dot),
+            FadeIn(electron),
+            Write(label),
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [dot, electron, label]
+
+        color = ManimColor.from_rgba((119, 247, 170, 1.0))
+        line = Line(
+            start=np.array([26.3 * scale, 1, 0]) + axis.get_start(),
+            end=np.array([26.3 * scale, -3.5, 0]) + axis.get_start(),
+            stroke_color=color,
+            stroke_width=10.0,
+        )
+        arrow_left = Arrow(
+            start=line.get_center(),
+            end=line.get_center() + 4 * LEFT,
+            tip_shape=StealthTip,
+            stroke_width=2.5,
+            tip_length=0.2,
+            stroke_color=GRAY,
+        )
+        text_left = Text(
+            "high school physics",
+            font='Open Sans',
+            font_size=240,
+            fill_color=GRAY,
+            fill_opacity=1.0,
+        ).scale(0.1).next_to(arrow_left, 0.5 * DOWN)
+
+        arrow_right = Arrow(
+            start=line.get_center(),
+            end=line.get_center() + 4 * RIGHT,
+            tip_shape=StealthTip,
+            stroke_width=2.5,
+            tip_length=0.2,
+            stroke_color=color,
+        )
+        text_right = Text(
+            "quantum mechanics",
+            font='Open Sans',
+            font_size=240,
+            fill_color=color,
+            fill_opacity=1.0,
+            weight="BOLD",
+        ).scale(0.1).next_to(arrow_right, 0.5 * DOWN)
+        anim = Succession(
+            Create(line),
+            AnimationGroup(Create(arrow_left), Create(arrow_right)),
+            run_time=1.0,
+        )
+        self.play(anim)
+        self.next_slide()
+        axis_mobjects += [arrow_left, arrow_right, line, text_left, text_right]
+
+        self.play(FadeIn(text_left), FadeIn(text_right), run_time=0.9)
+        self.next_slide()
+
+        entire_axis = VGroup(*axis_mobjects)
+        entire_hydrogen = VGroup(*(nuclei + electrons + lines))
+        electrostatics = VGroup(coulomb, tex)
+        # qm = Text(  # create schrodinger equation
+        #     "quantum mechanics",
+        #     font='Open Sans',
+        #     font_size=250,
+        #     fill_color=color,
+        #     fill_opacity=1.0,
+        #     weight="BOLD",
+        # ).scale(0.1).move_to(at + 1.5 * RIGHT)
+        raw_str = r"$$i \hbar \frac{\displaystyle \partial \psi}{\displaystyle \partial t} = \hat{H} \psi$$"
+        qm_tex = Tex(raw_str).move_to(at + 1.5 * RIGHT + 0.5 * DOWN).set_color(color)
+        self.play(
+            entire_axis.animate.shift(3.5 * DOWN),
+            entire_hydrogen.animate.shift(1.5 * LEFT),
+            electrostatics.animate.shift(2.5 * LEFT).set_color(GRAY),
+        )
+        self.play(
+            Write(qm_tex, run_time=0.7),
+        )
         self.next_slide()

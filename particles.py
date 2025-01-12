@@ -2,7 +2,7 @@ from functools import partial
 
 import numpy as np
 
-from manim import Circle, Square, ManimColor, WHITE, Text, VGroup, DOWN
+from manim import Circle, Square, ManimColor, WHITE, Text, VGroup, DOWN, BLACK
 
 
 NUCLEUS_COLOR = ManimColor.from_rgba((237, 105, 52, 1.0))
@@ -10,7 +10,6 @@ ELECTRON_COLOR = ManimColor.from_rgba((37, 161, 219, 1.0))
 
 
 def get_text(
-    position,
     title,
     bullets,
     title_color=WHITE,
@@ -37,7 +36,6 @@ def get_text(
         ).scale(0.1)
         items.append(item)
     all_text = VGroup(first, *items)
-    all_text.move_to(position)
     all_text.scale(scale)
     all_text.arrange_in_grid(
         rows=1 + len(bullets),
@@ -103,9 +101,9 @@ def create_circles(
 
 
 def get_particle(
-    position,
-    color=WHITE,
-    label='',
+    label,
+    color,
+    text_color,
     radius=1.0,
     scale=1.0,
 ):
@@ -118,29 +116,37 @@ def get_particle(
     text = Text(
         label,
         font="Noto Sans",
-        font_size=50,
-        fill_color=WHITE,
+        font_size=500,
+        fill_color=text_color,
         fill_opacity=1.0,
-    )
+    ).scale(0.1)
     text.move_to(circle.get_center())
     particle = VGroup(circle, text)
-    particle.move_to(position)
     particle.scale(scale)
     return particle
 
 
 get_electron = partial(
     get_particle,
-    radius=0.17,
-    color=ELECTRON_COLOR,
     label='-',
+    color=ELECTRON_COLOR,
+    text_color=WHITE,
+    radius=0.17,
     scale=0.8
 )
 
 
 get_nucleus = partial(
     get_particle,
-    color=NUCLEUS_COLOR,
     label='+',
+    color=NUCLEUS_COLOR,
+    text_color=WHITE,
     radius=0.3,
+)
+
+get_atom = partial(
+    get_particle,
+    color=WHITE,
+    text_color=BLACK,
+    radius=0.5,
 )
