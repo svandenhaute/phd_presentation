@@ -2,11 +2,11 @@ from functools import partial
 
 import numpy as np
 
-from manim import Circle, Square, ManimColor, WHITE, Text, VGroup, DOWN, BLACK
+from manim import Circle, Square, WHITE, Text, VGroup, DOWN, BLACK, ManimColor
 
 
-NUCLEUS_COLOR = ManimColor.from_rgba((237, 105, 52, 1.0))
-ELECTRON_COLOR = ManimColor.from_rgba((37, 161, 219, 1.0))
+NUCLEUS_COLOR = ManimColor.from_rgb((237, 105, 52))
+ELECTRON_COLOR = ManimColor.from_rgb((37, 161, 219))
 
 
 def get_text(
@@ -135,7 +135,6 @@ get_electron = partial(
     scale=0.8
 )
 
-
 get_nucleus = partial(
     get_particle,
     label='+',
@@ -150,3 +149,7 @@ get_atom = partial(
     text_color=BLACK,
     radius=0.5,
 )
+
+
+if __name__ == '__main__':
+    pass
