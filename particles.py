@@ -41,6 +41,7 @@ def get_text(
         rows=1 + len(bullets),
         columns=1,
         col_alignments='l',
+        buff=0.2,
     )
     return all_text
 
@@ -59,6 +60,47 @@ get_electron_text = partial(
 )
 
 
+def create_atom(
+    num_electrons,
+    radius,
+    label=None,
+    scale=0.9,
+):
+    circle = Circle(
+        fill_color=WHITE,
+        fill_opacity=0.0,
+        stroke_color=WHITE,
+        radius=radius,
+        stroke_width=2.0,
+    )
+    particles = [get_nucleus()]
+    positions = np.zeros((num_electrons + 1, 3))
+    while len(particles) < num_electrons + 1:
+        pos = np.random.uniform(
+            low=(-scale * radius, -scale * radius, 0),
+            high=(scale * radius, scale * radius, 0),
+            size=(3,),
+        ).reshape((1, 3))
+        distances = np.linalg.norm(positions - pos, axis=1)
+        if np.any(np.linalg.norm(positions - pos, axis=1) < 0.4):
+            continue
+        if np.linalg.norm(pos) > radius:
+            continue
+        if np.linalg.norm(pos) < 0.5:
+            continue
+        positions[len(particles), :] = pos[0]
+        particles.append(get_electron())
+
+    for i, particle in enumerate(particles):
+        particle.move_to(positions[i])
+
+    atom = VGroup(
+        circle,
+        *particles,
+    )
+    return atom
+
+
 def create_circles(
     num_particles,
     width,
@@ -73,8 +115,9 @@ def create_circles(
     length_scale = np.sqrt(width * height / num_particles)
     print(length_scale)
 
+    colors = [NUCLEUS_COLOR, ELECTRON_COLOR]
     while len(circles) < num_particles:
-        color = WHITE
+        color = colors[len(circles) % len(colors)]
         radius = 0.1
 
         start = (1 - scale) / 2

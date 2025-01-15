@@ -3,20 +3,21 @@ from functools import partial
 import numpy as np
 
 from manim import (
-    Scene, VGroup, DrawBorderThenFill, Circumscribe, Create, PI,
+    Scene, VGroup, DrawBorderThenFill, Circumscribe, Create, PI, Group,
     Circle, Square, Text, SVGMobject, ImageMobject, Rectangle, CubicBezier, Tex,
     Line, Dot, NumberLine, ValueTracker, Vector, DashedLine, Arrow, StealthTip,
     RoundedRectangle, MathTex, DecimalNumber, Axes,
     FadeIn, Transform, FadeOut, AnimationGroup, Succession, Write, Uncreate,
-    MoveToTarget, ReplacementTransform, Wait,
+    MoveToTarget, ReplacementTransform, Wait, AddTextLetterByLetter,
     f_always, linear, always,
     WHITE, BLACK, ManimColor, BLUE, RED, GRAY,
     DOWN, LEFT, RIGHT, UP, ORIGIN,
 )
+from manim.utils.rate_functions import ease_in_out_expo
 from manim_slides import Slide
 
 from particles import create_circles, get_electron, get_nucleus, get_nucleus_text, \
-    get_electron_text, get_atom, ELECTRON_COLOR, NUCLEUS_COLOR
+    get_electron_text, get_atom, ELECTRON_COLOR, NUCLEUS_COLOR, create_atom
 from periodic_table import generate_periodic_table, get_element
 from quantum import generate_hatch_pattern
 from hydrogen import potential
@@ -30,6 +31,7 @@ QM_COLOR = ManimColor.from_rgba((119, 247, 170, 1.0))
 class Title(Slide):
 
     def construct(self):
+        self.wait_time_between_slides = 0.05
         title = ImageMobject('images/title_slide.png')
         self.add(title)
         self.wait()
@@ -58,7 +60,7 @@ class Particles(Slide):
             stroke_opacity=1.0,
         )
         circles = create_circles(
-            num_particles=30,
+            num_particles=60,
             width=width,
             height=height,
             scale=0.9,
@@ -77,63 +79,46 @@ class Particles(Slide):
         #     fill_opacity=1.0,
         # )
         # description.next_to(rectangle, UP, buff=0.5)
-        equation = VGroup(globe, equal, box)
+        equation = VGroup(globe, equal, box).shift(2 * UP).scale(0.8)
 
         self.play(FadeIn(globe, run_time=0.5))
-        self.play(Write(equal))
-        self.play(DrawBorderThenFill(rectangle))
+        self.play(Write(equal), DrawBorderThenFill(rectangle), run_time=0.5)
         animations = []
         for circle in circles:
             animations.append(FadeIn(circle))
-        self.play(Succession(animations, run_time=2))
+        self.play(Succession(animations, run_time=1.0))
         self.next_slide()
 
-        self.play(equation.animate.scale(0.6).shift(2 * UP))
-
-        atom = circles[-1]
-        self.play(
-            atom.animate.move_to(ORIGIN + 3 * LEFT + 2 * DOWN).scale(3),
-            run_time=0.6,
-        )
-
-        empty = Circle(
-            fill_color=WHITE,
-            stroke_color=WHITE,
-            fill_opacity=0.0,
-            stroke_opacity=1.0,
-            stroke_width=2,
-            radius=1.3,
-        )
-        empty.set_x(atom.get_x())
-        empty.set_y(atom.get_y())
-        self.play(Transform(atom, empty), run_time=0.5)
-
-        nucleus = get_nucleus().move_to(empty.get_center())
-        electrons = []
-        radii = np.random.uniform(0.55, 1.1, size=(7,))
-        for i, radius in enumerate(radii):
-            location = empty.get_center()
-            location[0] += np.cos(2 * np.pi * i / len(radii)) * radius
-            location[1] += np.sin(2 * np.pi * i / len(radii)) * radius
-            electron = get_electron().move_to(location)
-            electrons.append(electron)
-        for particle in [nucleus, *electrons]:
-            self.play(FadeIn(particle, run_time=0.15))
-        self.next_slide()
+        atom = create_atom(num_electrons=1, radius=1.0).scale(0.8)
+        atom.shift(2 * DOWN + 4 * LEFT)
+        detached = VGroup(*circles[-2:])
 
         nucleus_text = get_nucleus_text(
             scale=1.3,
-        ).move_to(empty.get_center() + 4 * RIGHT + 1.2 * UP)
+        ).move_to(equation.get_center() + 4 * DOWN)
         electron_text = get_electron_text(
             scale=1.3,
-        ).move_to(empty.get_center() + 4 * RIGHT + 1.2 * DOWN)
+        ).move_to(equation.get_center() + 4 * DOWN + 4 * RIGHT)
         self.play(Write(nucleus_text), run_time=0.2)
         self.play(Write(electron_text), run_time=0.2)
+        self.next_slide()
+
+        self.play(ReplacementTransform(detached, atom))
+        self.next_slide()
+
+        carbon = create_atom(8, 1.2).move_to(atom.get_center())
+        self.play(ReplacementTransform(atom, carbon))
+        self.next_slide()
+
+        gold = create_atom(22, 1.8).move_to(atom.get_center())
+        self.play(ReplacementTransform(carbon, gold))
+        self.next_slide()
 
 
 class PeriodicTable(Slide):
 
     def highlight(self, elements, boxes):
+        self.wait_time_between_slides = 0.05
         animations = []
         for element in elements:
             symbol, square = boxes[element]
@@ -164,36 +149,66 @@ class PeriodicTable(Slide):
         return animations
 
     def construct(self):
+        self.wait_time_between_slides = 0.05
         boxes = generate_periodic_table()
-        table = VGroup(*sum(boxes.values(), start=())).center().shift(1.5 * UP)
-        self.play(DrawBorderThenFill(table), run_time=1)
+        table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
+        self.play(Create(table), run_time=1)
         self.next_slide()
 
-        run_time = 0.6
+        run_time = 0.4
 
         highlights = self.highlight(['H', 'O'], boxes)
-        ice = SVGMobject('images/ice_cubes.svg').center().shift(2.8 * DOWN)
+        ice = SVGMobject('images/ice_cubes.svg').center().shift(2.5 * DOWN)
         self.play(FadeIn(ice), *highlights, run_time=run_time)
         self.next_slide()
 
         unhighlights = self.unhighlight(['H', 'O'], boxes)
         highlights = self.highlight(['H', 'O', 'N', 'C'], boxes)
-        covid = SVGMobject('images/covid.svg').center().shift(2.8 * DOWN)
+        covid = SVGMobject('images/covid.svg').center().shift(2.5 * DOWN)
         self.play(FadeOut(ice), *unhighlights, run_time=run_time)
         self.play(FadeIn(covid), *highlights, run_time=run_time)
         self.next_slide()
 
         unhighlights = self.unhighlight(['H', 'O', 'N', 'C'], boxes)
         highlights = self.highlight(['Si'], boxes)
-        solar = SVGMobject('images/solar_panel.svg').center().shift(2.8 * DOWN)
+        solar = SVGMobject('images/solar_panel.svg').center().shift(2.5 * DOWN)
         self.play(FadeOut(covid), *unhighlights, run_time=run_time)
         self.play(FadeIn(solar), *highlights, run_time=run_time)
+        self.next_slide()
+
+        unhighlights = self.unhighlight(['Si'], boxes)
+        self.play(FadeOut(solar), *unhighlights, run_time=run_time)
+        self.next_slide()
+
+        physics = Text(
+            'laws of physics?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        simulation = Text(
+            'challenges?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        solution = Text(
+            'solution?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        goals = VGroup(physics, simulation, solution).arrange(RIGHT, buff=2.5)
+        goals.shift(2 * DOWN)
+        self.play(Write(physics), run_time=0.5)
+        self.next_slide()
+        self.play(Write(simulation), run_time=0.5)
+        self.next_slide()
+        self.play(Write(solution), run_time=0.5)
         self.next_slide()
 
 
 class Masses(Slide):
 
     def construct(self):
+        self.wait_time_between_slides = 0.05
         positions = 2 * np.array([
             [-0.1, 0.3, 0],
             [0.7, 0.5, 0],
@@ -500,17 +515,17 @@ class Masses(Slide):
         raw_str = r"$$F = m a$$"
         classical_tex = Tex(raw_str).move_to(electrostatics.get_center()).set_color(WHITE)
         classical_tex.move_to(qm_tex.get_center() + 3 * DOWN)
-        classical_tex[0][0:3].set_color(color=QM_COLOR)
+        classical_tex[0][:2].set_color(color=QM_COLOR)
         self.play(ReplacementTransform(electrons_lines, hatch))
         self.play(Write(classical_tex), run_time=0.7)
-        self.play(Circumscribe(classical_tex[0][:2], color=QM_COLOR))
-        self.next_slide()
+        # self.play(Circumscribe(classical_tex[0][:2], color=QM_COLOR))
         self.next_slide()
 
 
 class Dynamics(Slide):
 
     def construct(self):
+        self.wait_time_between_slides = 0.05
         equilibrium_distance = 1.5
         positions = np.array([
             [equilibrium_distance / 2, 0, 0],
@@ -541,12 +556,12 @@ class Dynamics(Slide):
             num_decimal_places=2,
         )
         unit = Text(
-            "nm",
+            "Å",
             font='Open Sans',
             font_size=300,
             fill_color=WHITE,
             fill_opacity=1.0,
-        ).scale(0.1).next_to(distance, RIGHT)
+        ).scale(0.1).next_to(distance, RIGHT, aligned_edge=DOWN)
         distance.add_updater(lambda x: x.set_value(separation() / equilibrium_distance * 0.74))
         d_label = VGroup(distance, unit)
 
@@ -586,7 +601,7 @@ class Dynamics(Slide):
         graph_label = axes.get_graph_label(graph, 'E(r)')
         graph_label.next_to(graph.get_start(), RIGHT)
 
-        self.play(Write(axes.get_x_axis()), Write(xlabel, run_time=0.6))
+        self.play(AddTextLetterByLetter(axes.get_x_axis()), Write(xlabel, run_time=0.6))
         self.next_slide()
 
         def get_dot_x():
@@ -599,7 +614,7 @@ class Dynamics(Slide):
         self.play(FadeIn(dot_x), FadeIn(d_label))
         self.next_slide()
 
-        self.play(time.animate.set_value(16), rate_func=linear, run_time=3)
+        self.play(time.animate.set_value(27), rate_func=linear, run_time=2)
         self.next_slide()
 
         self.play(
@@ -615,20 +630,16 @@ class Dynamics(Slide):
         dot = Dot(z_index=1).move_to(get_dot())
         f_always(dot.move_to, get_dot)
 
-
-        start = time.get_value()
-        dt = 0.5  # in fs
-
         force_eval = Text(
             "evaluate forces on nuclei",
-            font='Open Sans',
+            font='JetBrainsMono Nerd Font',
             font_size=300,
             fill_color=NUCLEUS_COLOR,
             fill_opacity=1.0,
         ).scale(0.1)
         position_update = Text(
-            "increment positions",
-            font='Open Sans',
+            "update nuclei positions",
+            font='JetBrainsMono Nerd Font',
             font_size=300,
             fill_color=NUCLEUS_COLOR,
             fill_opacity=1.0,
@@ -638,47 +649,313 @@ class Dynamics(Slide):
             buff=0.2,
             aligned_edge=LEFT,
         )
-        tasks.shift(2 * DOWN + 3 * RIGHT)
-        arrow = Arrow(
-            start=ORIGIN,
-            end=RIGHT,
-            tip_shape=StealthTip,
-            stroke_width=2.5,
-            tip_length=0.2,
-            color=NUCLEUS_COLOR,
-        ).next_to(force_eval, LEFT)
+        tasks.shift(2.5 * DOWN + 3 * RIGHT)
+        # arrow = Arrow(
+        #     start=ORIGIN,
+        #     end=RIGHT,
+        #     tip_shape=StealthTip,
+        #     stroke_width=2.5,
+        #     tip_length=0.2,
+        #     color=NUCLEUS_COLOR,
+        # ).next_to(force_eval, LEFT)
 
         self.play(ReplacementTransform(dot_x, dot), run_time=0.5)
-        self.play(Write(force_eval), Write(arrow), run_time=0.5)
+        self.next_slide()
+
+        self.play(time.animate.set_value(54), run_time=2, rate_func=linear)
+        self.next_slide()
+
+        self.play(AddTextLetterByLetter(force_eval), run_time=0.5)
         self.next_slide()
 
         self.play(
-            arrow.animate.next_to(position_update, LEFT),
-            Write(position_update),
+            # arrow.animate.next_to(position_update, LEFT),
+            AddTextLetterByLetter(position_update),
             run_time=0.5,
         )
+
+        start = time.get_value()
+        dt = 0.5  # in fs
         self.play(time.animate.set_value(start + dt), run_time=0.1)
         self.next_slide()
-        for step in range(2, 4):
-            self.play(arrow.animate.next_to(force_eval, LEFT), run_time=0.1)
-            self.wait(1)
-            self.play(arrow.animate.next_to(position_update, LEFT), run_time=0.1)
-            self.play(time.animate.set_value(start + step * dt), run_time=0.1)
-        for step in range(4, 10):
-            self.play(arrow.animate.next_to(force_eval, LEFT), run_time=0.05)
-            self.wait(0.2)
-            self.play(arrow.animate.next_to(position_update, LEFT), run_time=0.05)
-            self.play(time.animate.set_value(start + step * dt), run_time=0.05)
-        self.next_slide()
-            #time.set_value(3)
-        #self.wait(0.1)
-        #self.next_slide()
-        #time.set_value(4)
-        #self.wait(0.1)
-        #self.next_slide()
 
-        # Axes.get_graph will return the graph of a function
-        # sin_graph = axes.get_graph(
-        #     lambda x: 2 * np.sin(x),
-        #     color=BLUE,
-        # )
+        line = Line(ORIGIN, DOWN, color=NUCLEUS_COLOR).next_to(tasks, LEFT)
+        self.play(Create(line), run_time=0.5)
+        start = time.get_value()
+        for i in range(1, 12):
+            self.play(
+                time.animate.set_value(start + i * dt),
+                run_time=0.4,
+                rate_func=ease_in_out_expo,
+            )
+        self.next_slide()
+
+
+class TimeEvolution(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        frequency = 119e12 * 1e-15  # period ~ 8 fs
+
+        def distance(t):
+            return 0.74 + 0.35 * np.sin(2 * np.pi * frequency * t)
+
+        axes = Axes(
+            (0.0, 16), (0, 1.5),
+            y_axis_config={'include_ticks': False},
+        ).scale(0.7).shift(UP)
+        graph = axes.plot(
+            distance,
+            color=WHITE,
+            x_range=[0, 16],
+        ).set_z_index(0)
+        ylabel = Text(
+            "interatomic\n  distance",
+            font='Open Sans',
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1).next_to(axes.get_y_axis().get_end(), LEFT)
+        xlabel = Text(
+            "time",
+            font='Open Sans',
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1).next_to(axes.get_x_axis().get_end(), DOWN)
+        tick = Text(
+            "0.74 Å",
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1).move_to(axes.c2p(0, 0.74) + LEFT)
+
+        self.play(Write(axes), run_time=0.4)
+        self.play(AddTextLetterByLetter(xlabel), Write(ylabel), run_time=0.4)
+        self.play(Write(tick, run_time=0.5))
+        self.play(Write(graph))
+
+        self.next_slide()
+
+        dt = 0.5
+        dots = []
+        for i in range(33):
+            dot = Dot(axes.c2p(i * dt, distance(i * dt)), color=NUCLEUS_COLOR)
+            dots.append(dot)
+        animation = Succession(*[FadeIn(dot) for dot in dots], lag_ratio=0.2)
+        self.play(animation)
+        self.next_slide()
+
+        cost = Text(
+            "computational cost?",
+            font='Open Sans',
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+            weight="BOLD",
+        ).scale(0.1)
+        steps = Text(
+            "(# steps)  x  (cost/step)",
+            font='Open Sans',
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1)
+        # per_step = Text(
+        #     "cost per step",
+        #     font='Open Sans',
+        #     font_size=300,
+        #     fill_color=WHITE,
+        #     fill_opacity=1.0,
+        # ).scale(0.1)
+        total = VGroup(
+            cost,
+            steps,
+        ).arrange(RIGHT, buff=2).move_to(2.5 * DOWN)
+        self.play(AddTextLetterByLetter(cost), run_time=0.5)
+        self.next_slide()
+        self.play(AddTextLetterByLetter(steps), run_time=0.5)
+        self.next_slide()
+        values = Text(
+            "    ~30        x  ~1 second",
+            font='Open Sans',
+            font_size=300,
+            fill_color=ELECTRON_COLOR,
+            fill_opacity=1.0,
+        ).scale(0.1).next_to(steps, DOWN).shift(0.2 * RIGHT)
+        self.play(AddTextLetterByLetter(values), run_time=0.5)
+        self.next_slide()
+
+
+class TimeScales(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        files = [f'images/timescales/timescales_Layer_{i + 2}.png' for i in range(4)]
+        parts = Group(*[ImageMobject(file).center().scale(0.5) for file in files])
+        parts.scale(0.8).shift(UP)
+
+        amino = Text(
+            'amino acid',
+            font='Open Sans',
+            font_size=250,
+            color=WHITE,
+        ).scale(0.1).next_to(parts, DOWN).shift(3 * LEFT)
+        # primary = Text(
+        #     'primary structure',
+        #     font='Open Sans',
+        #     font_size=250,
+        #     color=WHITE,
+        # ).scale(0.1).move_to(parts.next_to(parts.get_corner(DOWN + LEFT)))
+
+        labels = [amino]
+
+        for i, part in enumerate(parts):
+            self.add(part)
+            self.play(Wait())
+            self.next_slide()
+
+        axis_size = 13
+        axis = Arrow(
+            start=np.array([-axis_size / 2, 0, 0]),
+            end=np.array([axis_size / 2, 0, 0]),
+            tip_shape=StealthTip,
+            stroke_width=2.5,
+            tip_length=0.2,
+        ).shift(2 * DOWN)
+        axis_label = Text(
+            'time scale [s]',
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).move_to(axis.get_end() + 0.4 * DOWN + 0.5 * RIGHT, RIGHT)
+
+        powers = list(range(-15, 3, 3))
+        #labels = [r'$10^{' + str(i) + r'}$' for i in powers]
+
+        femtosecond = Text(
+            '~10 femtoseconds',
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1).move_to(axis.get_start(), UP).shift(2 * RIGHT + UP)
+        microsecond = Text(
+            '~1 millisecond!',
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1).move_to(axis.get_end() + 0.5 * UP + 2 * LEFT, RIGHT)
+
+        self.play(Create(axis), AddTextLetterByLetter(axis_label), run_time=0.5)
+        self.next_slide()
+
+        self.play(AddTextLetterByLetter(femtosecond), run_time=0.5)
+        self.next_slide()
+        self.play(AddTextLetterByLetter(microsecond), run_time=0.5)
+        self.next_slide()
+
+        milliseconds = Text(
+            "1 millisecond",
+            font='Open Sans',
+            font_size=300,
+            fill_color=ELECTRON_COLOR,
+            fill_opacity=1.0,
+        ).scale(0.1)
+        evals = Text(
+            "~  2,000,000,000 force evaluations",
+            font='Open Sans',
+            font_size=150,
+            fill_color=ELECTRON_COLOR,
+            fill_opacity=1.0,
+        ).scale(0.2)
+        scale = VGroup(milliseconds, evals).arrange(
+            RIGHT,
+            buff=0.3,
+        )
+        scale.move_to(3 * DOWN)
+        self.play(AddTextLetterByLetter(milliseconds), run_time=0.5)
+        self.play(AddTextLetterByLetter(evals), run_time=0.5)
+        self.next_slide()
+
+        time = Text(
+            "~  83 years of simulation ...",
+            font='Open Sans',
+            font_size=150,
+            fill_color=ELECTRON_COLOR,
+            fill_opacity=1.0,
+        ).scale(0.2).next_to(evals, DOWN, aligned_edge=LEFT)
+        self.play(AddTextLetterByLetter(time), run_time=0.5)
+        self.next_slide()
+
+
+
+
+class Overview(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        boxes = generate_periodic_table()
+        table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
+        self.play(Create(table), run_time=1)
+        self.next_slide()
+
+        physics = Text(
+            'laws of physics?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        simulation = Text(
+            'challenges?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        solution = Text(
+            'solution?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        goals = VGroup(physics, simulation, solution).arrange(
+            RIGHT,
+            buff=2.5,
+            aligned_edge=UP,
+        )
+        goals.shift(2 * DOWN)
+        self.play(AddTextLetterByLetter(physics), run_time=0.5)
+        self.play(AddTextLetterByLetter(simulation), run_time=0.5)
+        self.play(AddTextLetterByLetter(solution), run_time=0.5)
+        self.next_slide()
+
+        nuclei = Text(
+            'classical (nuclei)',
+            font='Open Sans',
+            font_size=250,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1)
+        electrons = Text(
+            'quantum (electrons)',
+            font='Open Sans',
+            font_size=250,
+            color=QM_COLOR,
+        ).scale(0.1)
+        laws = VGroup(nuclei, electrons).arrange(
+            DOWN,
+            buff=0.2,
+            # aligned_edge=LEFT,
+        ).next_to(physics, DOWN)
+        self.play(FadeIn(laws), run_time=0.4)
+        self.next_slide()
+
+        newton = Tex(r"$F=ma$", color=WHITE)
+        newton[0][0].set_color(QM_COLOR)
+        evaluations = Text(
+            '# evaluations',
+            font='Open Sans',
+            font_size=250,
+            color=WHITE,
+        ).scale(0.1)
+        challenges = VGroup(newton, evaluations).arrange(
+            DOWN,
+            buff=0.2,
+        ).next_to(simulation, DOWN)
+        self.play(FadeIn(challenges))
+        self.next_slide()

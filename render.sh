@@ -3,7 +3,7 @@
 
 set -e
 
-slides="Dynamics"
+slides="TimeEvolution TimeScales"
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 manim render --fps 30 -r "1280,720" scene.py $slides

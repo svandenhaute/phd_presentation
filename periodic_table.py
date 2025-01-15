@@ -19,17 +19,32 @@ elements = {
     'Rh': (45, 5, 9), 'Pd': (46, 5, 10), 'Ag': (47, 5, 11), 'Cd': (48, 5, 12),
     'In': (49, 5, 13), 'Sn': (50, 5, 14), 'Sb': (51, 5, 15), 'Te': (52, 5, 16),
     'I': (53, 5, 17), 'Xe': (54, 5, 18),
-    'Cs': (55, 6, 1), 'Ba': (56, 6, 2), 'Hf': (72, 6, 4), 'Ta': (73, 6, 5),
+    'Cs': (55, 6, 1), 'Ba': (56, 6, 2), 'La': (57, 6, 3), 'Hf': (72, 6, 4), 'Ta': (73, 6, 5),
     'W': (74, 6, 6), 'Re': (75, 6, 7), 'Os': (76, 6, 8), 'Ir': (77, 6, 9),
     'Pt': (78, 6, 10), 'Au': (79, 6, 11), 'Hg': (80, 6, 12), 'Tl': (81, 6, 13),
     'Pb': (82, 6, 14), 'Bi': (83, 6, 15), 'Po': (84, 6, 16), 'At': (85, 6, 17),
     'Rn': (86, 6, 18),
-    'Fr': (87, 7, 1), 'Ra': (88, 7, 2), 'Rf': (104, 7, 4), 'Db': (105, 7, 5),
+    'Fr': (87, 7, 1), 'Ra': (88, 7, 2), 'Ac': (89, 7, 3), 'Rf': (104, 7, 4), 'Db': (105, 7, 5),
     'Sg': (106, 7, 6), 'Bh': (107, 7, 7), 'Hs': (108, 7, 8), 'Mt': (109, 7, 9),
     'Ds': (110, 7, 10), 'Rg': (111, 7, 11), 'Cn': (112, 7, 12), 'Nh': (113, 7, 13),
     'Fl': (114, 7, 14), 'Mc': (115, 7, 15), 'Lv': (116, 7, 16), 'Ts': (117, 7, 17),
     'Og': (118, 7, 18)
 }
+lanthanides = {
+    'Ce': 58, 'Pr': 59, 'Nd': 60, 'Pm': 61, 'Sm': 62, 'Eu': 63, 'Gd': 64,
+    'Tb': 65, 'Dy': 66, 'Ho': 67, 'Er': 68, 'Tm': 69, 'Yb': 70, 'Lu': 71
+}
+
+actinides = {
+    'Th': 90, 'Pa': 91, 'U': 92, 'Np': 93, 'Pu': 94, 'Am': 95, 'Cm': 96,
+    'Bk': 97, 'Cf': 98, 'Es': 99, 'Fm': 100, 'Md': 101, 'No': 102, 'Lr': 103
+}
+
+scale = 1.2
+gap_size = 0.1
+
+def adjust_x(col, box_size, padding):
+    return (col - 1) * box_size + padding + (gap_size if col > 3 else 0)
 
 
 def get_element(
@@ -77,7 +92,7 @@ def get_element(
     symbol = Text(
         text,
         font='Open Sans',
-        font_size=250,
+        font_size=150 * scale,
         **kwargs,
     ).scale(0.1).move_to(square.get_center())
     return symbol, square
@@ -85,10 +100,28 @@ def get_element(
 
 def generate_periodic_table(**kwargs):
     boxes = {}
-    box_size = 0.65
+    box_size = 0.45 * scale
+    padding = 0
     for element, (atomic_num, row, col) in elements.items():
-        x = (col - 1) * box_size
+        x = adjust_x(col, box_size, padding)
         y = (-1.0) * (row - 1) * box_size
+        symbol, square = get_element(element, box_size, **kwargs)
+        box = VGroup(symbol, square)
+        box.move_to((x, y, 1))
+        boxes[element] = (symbol, square)
+
+    f_block_y = -7.5 * box_size
+    f_block_x = 2 * box_size + gap_size
+    for i, (element, atomic_num) in enumerate(lanthanides.items()):
+        x = padding + (i + 1) * box_size + f_block_x
+        y = f_block_y
+        symbol, square = get_element(element, box_size, **kwargs)
+        box = VGroup(symbol, square)
+        box.move_to((x, y, 1))
+        boxes[element] = (symbol, square)
+    for i, (element, atomic_num) in enumerate(actinides.items()):
+        x = padding + (i + 1) * box_size + f_block_x
+        y = f_block_y - box_size
         symbol, square = get_element(element, box_size, **kwargs)
         box = VGroup(symbol, square)
         box.move_to((x, y, 1))
