@@ -12,3 +12,10 @@ def potential(distance):
     potential = De * (1 - np.exp(-a * (distance - re)))**2 - De
 
     return potential
+
+
+def harmonic(distance):
+    re = 0.78   # Equilibrium bond distance in Angstroms
+    k = 3  # Force constant in kJ/(mol·Å²)
+    potential = 0.5 * k * (distance - re)**2 - 1
+    return potential
