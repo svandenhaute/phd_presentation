@@ -3,8 +3,8 @@
 
 set -e
 
-# slides="Title Particles PeriodicTable Masses Dynamics OverviewPhysics TimeEvolution TimeScales Overview HydrogenRevisited Priors"
-slides="Priors"
+# slides="Title Particles PeriodicTable Masses Dynamics OverviewPhysics TimeEvolution TimeScales Overview HydrogenRevisited Priors Dimensionality Images"
+slides="Masses"
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 manim render --fps 30 -r "1280,720" scene.py $slides

@@ -7,12 +7,12 @@ from manim import (
     Circle, Square, Text, SVGMobject, ImageMobject, Rectangle, CubicBezier, Tex,
     Line, Dot, NumberLine, ValueTracker, Vector, DashedLine, Arrow, StealthTip,
     RoundedRectangle, MathTex, DecimalNumber, Axes, CurvedArrow, ThreeDAxes,
-    Sphere, DashedVMobject,
+    Sphere, DashedVMobject, ImageMobject,
     FadeIn, Transform, FadeOut, AnimationGroup, Succession, Write, Uncreate,
-    MoveToTarget, ReplacementTransform, Wait, AddTextLetterByLetter,
+    MoveToTarget, ReplacementTransform, Wait, AddTextLetterByLetter, Brace,
     f_always, linear, always,
     WHITE, BLACK, ManimColor, BLUE, RED, GRAY,
-    DOWN, LEFT, RIGHT, UP, ORIGIN,
+    DOWN, LEFT, RIGHT, UP, ORIGIN, UL, UR,
 )
 from manim.utils.rate_functions import ease_in_out_expo
 from manim_slides import Slide, ThreeDSlide
@@ -515,7 +515,7 @@ class Masses(Slide):
             nucleus.set_z_index(1)
         self.next_slide()
 
-        raw_str = r"$$F = m a$$"
+        raw_str = r"$$\overrightarrow{F} = m \overrightarrow{a}$$"
         classical_tex = Tex(raw_str).move_to(electrostatics.get_center()).set_color(WHITE)
         classical_tex.move_to(qm_tex.get_center() + 3 * DOWN)
         classical_tex[0][0].set_color(color=QM_COLOR)
@@ -1297,9 +1297,191 @@ class Priors(Slide):
         self.play(angle.animate.set_value(np.pi / 2), run_time=3)
         self.next_slide()
 
-        linear_coord = coordinates.copy().arrange(RIGHT, buff=0.2)
-        linear_coord.center().shift(2 * DOWN)
+
+class Dimensionality(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        title = Text(
+            "the curse of dimensionality",
+            font='Open Sans',
+            font_size=350,
+        ).scale(0.1).to_corner(UL)
+        self.add(title)
+        self.play(Wait())
+        self.next_slide()
+
+        equation = Tex(r"$E = E(x_1, y_1, z_1, x_2, y_2, z_2, ... )$").shift(2 * UP)
+        brace = Brace(equation[0][4:-1], color=NUCLEUS_COLOR)
+        self.play(Write(equation, run_time=0.5))
+        self.play(Create(brace))
+        self.next_slide()
+
+        texts = []
+        for number in [10, 100, 1000]:
+            text = Text(
+                str(number),
+                font='Open Sans',
+                font_size=300,
+                color=NUCLEUS_COLOR,
+            ).scale(0.1).next_to(brace, DOWN)
+            texts.append(text)
+        self.play(FadeIn(texts[0], run_time=0.5))
+        self.play(ReplacementTransform(texts[0], texts[1]), run_time=0.5)
+        self.play(ReplacementTransform(texts[1], texts[2]), run_time=0.5)
+        self.next_slide()
+
+        one_d = Text(
+            "in 1D:",
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+            weight="BOLD",
+        ).scale(0.1).shift(5 * LEFT + DOWN)
+        one_count = Text(
+            "10 points",
+            font='Open Sans',
+            font_size=350,
+        ).scale(0.1).next_to(one_d, DOWN)
+        # axis = Arrow(
+        #     start=ORIGIN,
+        #     end=7 * RIGHT,
+        #     tip_shape=StealthTip,
+        #     stroke_width=2.5,
+        #     tip_length=0.2,
+        # ).next_to(one_d, 5 * RIGHT, aligned_edge=LEFT)
+        self.play(Create(one_d), run_time=0.5)
+        self.next_slide()
+
+        dots1 = VGroup(*[Dot() for i in range(10)]).arrange(RIGHT, buff=0.5)
+        dots1.next_to(text, 8 * DOWN, aligned_edge=UP)
+        self.play(Create(dots1), run_time=0.5)
+        self.play(Create(one_count), run_time=0.5)
+        self.next_slide()
+
+        dots2 = VGroup(*[Dot() for i in range(100)]).arrange_in_grid(10, 10, buff=0.25)
+        dots2.next_to(text, DOWN)
+        two_d = Text(
+            "in 2D:",
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+            weight="BOLD",
+        ).scale(0.1).move_to(one_d.get_center())
+        two_count = Text(
+            "100 points",
+            font='Open Sans',
+            font_size=350,
+        ).scale(0.1).next_to(two_d, DOWN)
         self.play(
-            ReplacementTransform(coordinates, linear_coord),
+            ReplacementTransform(dots1, dots2),
+            ReplacementTransform(one_d, two_d),
+            ReplacementTransform(one_count, two_count),
+            # axis.animate.move_to(VGroup(dots2[-10:]).get_center()),
+            run_time=0.7,
         )
+        self.next_slide()
+
+        three_d = Text(
+            "in 3D:",
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+            weight="BOLD",
+        ).scale(0.1).move_to(two_d.get_center())
+        three_count = Text(
+            "1000 points",
+            font='Open Sans',
+            font_size=350,
+        ).scale(0.1).next_to(three_d, DOWN)
+        self.play(
+            FadeOut(dots2, run_time=0.5),
+            ReplacementTransform(two_d, three_d),
+            ReplacementTransform(two_count, three_count),
+            run_time=0.5,
+        )
+        self.next_slide()
+        thousand_d = Text(
+            "in 1000D:",
+            font='Open Sans',
+            font_size=300,
+            color=NUCLEUS_COLOR,
+            weight="BOLD",
+        ).scale(0.1).move_to(two_d.get_center())
+        thousand_count = Tex(r"$\infty$").next_to(three_d, DOWN).scale(1.3)
+        self.play(
+            ReplacementTransform(three_d, thousand_d),
+            ReplacementTransform(three_count, thousand_count),
+            run_time=0.5,
+        )
+        self.next_slide()
+
+
+class Images(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        title = Tex(r"\sffamily analogy: images")
+        title.to_corner(UL)
+        feynman = ImageMobject('images/feynman.jpg').scale(5).shift(3 * LEFT)
+        dimensions = Tex(
+            r"\sffamily 128 x 128 pixels; 10,000 dimensions",
+            color=NUCLEUS_COLOR,
+        ).next_to(feynman, DOWN)
+        solved = Tex(
+            r"\sffamily How? The manifold hypothesis",
+            color=ELECTRON_COLOR,
+        ).next_to(feynman, 2 * RIGHT, aligned_edge=LEFT).shift(2 * UP)
+        self.add(title)
+        self.play(Wait())
+        self.next_slide()
+
+        self.play(FadeIn(feynman, run_time=0.6))
+        self.play(AddTextLetterByLetter(dimensions), run_time=0.5)
+        self.next_slide()
+
+        self.play(AddTextLetterByLetter(solved), run_time=0.5)
+        self.next_slide()
+
+        nimages = 10
+        scale = 3
+        images = np.random.randint(0, 256, size=(nimages, 128, 128)).astype(np.uint8)
+        anims = []
+        for image in images:
+            mob = ImageMobject(image).move_to(feynman.get_center()).scale(5)
+            mob.set_resampling_algorithm(4)  # 4 == box
+            anims.append(FadeIn(mob, run_time=0.06))
+            anims.append(Wait(0.2))
+
+        self.play(Succession(*anims), run_time=5)
+        self.next_slide()
+
+        images = Tex(
+            r"\sffamily images",
+            color=WHITE,
+        )
+        audio = Tex(
+            r"\sffamily audio (music)",
+            color=WHITE,
+        )
+        text = Tex(
+            r"\sffamily text (language)",
+            color=WHITE,
+        )
+        atoms = Tex(
+            r"\textbf{\sffamily atoms}",
+            color=WHITE,
+        )
+        all_ = VGroup(images, audio, text, atoms).arrange(DOWN).next_to(solved, 3 * DOWN, aligned_edge=UP)
+
+        self.play(AddTextLetterByLetter(images), run_time=0.5)
+        self.next_slide()
+        self.play(AddTextLetterByLetter(audio), run_time=0.5)
+        self.next_slide()
+        self.play(AddTextLetterByLetter(text), run_time=0.5)
+        self.next_slide()
+
+        self.play(AddTextLetterByLetter(atoms), run_time=0.5)
         self.next_slide()
