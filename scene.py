@@ -10,6 +10,7 @@ from manim import (
     Sphere, DashedVMobject, ImageMobject,
     FadeIn, Transform, FadeOut, AnimationGroup, Succession, Write, Uncreate,
     MoveToTarget, ReplacementTransform, Wait, AddTextLetterByLetter, Brace,
+    MoveAlongPath, LaggedStart,
     f_always, linear, always,
     WHITE, BLACK, ManimColor, BLUE, RED, GRAY,
     DOWN, LEFT, RIGHT, UP, ORIGIN, UL, UR,
@@ -28,6 +29,9 @@ TITLE_FONT_SIZE = 14
 ANIMATION_RUNTIME = 0.2
 QM_COLOR = ManimColor.from_rgba((119, 247, 170, 1.0))
 OXYGEN_COLOR = ManimColor.from_rgb((242, 94, 68))
+MESSAGE_COLOR = ManimColor.from_rgb((245, 196, 0))
+MESSAGE0_COLOR = ManimColor.from_rgb((245, 86, 0))
+MESSAGE1_COLOR = ManimColor.from_rgb((245, 0, 45))
 
 
 class Title(Slide):
@@ -1064,7 +1068,7 @@ class Overview(Slide):
         self.play(FadeIn(laws), run_time=0.4)
         self.next_slide()
 
-        newton = Tex(r"$F=ma$", color=WHITE)
+        newton = Tex(r"$\overrightarrow{F}=m\overrightarrow{a}$", color=WHITE)
         newton[0][0].set_color(QM_COLOR)
         evaluations = Text(
             '# evaluations',
@@ -1297,6 +1301,15 @@ class Priors(Slide):
         self.play(angle.animate.set_value(np.pi / 2), run_time=3)
         self.next_slide()
 
+        arrow = Arrow(ORIGIN, 2 * DOWN).next_to(coordinates, DOWN)
+        energy = Tex(r"\sffamily energy").next_to(arrow, DOWN)
+        self.play(
+            Create(arrow),
+            Create(energy),
+            run_time=0.5,
+        )
+        self.next_slide()
+
 
 class Dimensionality(Slide):
 
@@ -1312,24 +1325,34 @@ class Dimensionality(Slide):
         self.play(Wait())
         self.next_slide()
 
-        equation = Tex(r"$E = E(x_1, y_1, z_1, x_2, y_2, z_2, ... )$").shift(2 * UP)
-        brace = Brace(equation[0][4:-1], color=NUCLEUS_COLOR)
-        self.play(Write(equation, run_time=0.5))
-        self.play(Create(brace))
+        axes = Axes((0.0, 8), (-1, 1), x_length=7).scale(0.7).shift(0.5 * LEFT)
+        axes.shift(RIGHT)
+        f = lambda x: potential(x / 1.5 * 0.74)
+        graph = axes.plot(
+            f,
+            color=QM_COLOR,
+            x_range=[0.6, 7],
+        ).set_z_index(0)
+
+        dots = [Dot() for i in range(10)]
+        dots_f = [Dot() for i in range(10)]
+        for dot, x in zip(dots, np.linspace(0.8, 5, 10)):
+            dot.move_to(axes.c2p(x, 0))
+        for dot, x in zip(dots_f, np.linspace(0.8, 5, 10)):
+            dot.move_to(axes.c2p(x, f(x)))
+
+        gdots = VGroup(*dots)
+        gdots_f = VGroup(*dots_f)
+        self.play(Create(graph), run_time=0.5)
         self.next_slide()
 
-        texts = []
-        for number in [10, 100, 1000]:
-            text = Text(
-                str(number),
-                font='Open Sans',
-                font_size=300,
-                color=NUCLEUS_COLOR,
-            ).scale(0.1).next_to(brace, DOWN)
-            texts.append(text)
-        self.play(FadeIn(texts[0], run_time=0.5))
-        self.play(ReplacementTransform(texts[0], texts[1]), run_time=0.5)
-        self.play(ReplacementTransform(texts[1], texts[2]), run_time=0.5)
+        self.play(Succession(*[FadeIn(d) for d in dots], lag_ratio=0.3), run_time=0.5)
+        self.play(ReplacementTransform(gdots, gdots_f), run_time=1.0)
+        self.next_slide()
+
+        dots1 = VGroup(*[Dot() for i in range(10)]).arrange(RIGHT, buff=0.25).shift(RIGHT)
+        self.play(FadeOut(graph, run_time=0.5))
+        self.play(ReplacementTransform(gdots_f, dots1, run_time=0.5))
         self.next_slide()
 
         one_d = Text(
@@ -1338,7 +1361,7 @@ class Dimensionality(Slide):
             font_size=300,
             color=NUCLEUS_COLOR,
             weight="BOLD",
-        ).scale(0.1).shift(5 * LEFT + DOWN)
+        ).scale(0.1).next_to(dots1, 8 * LEFT)
         one_count = Text(
             "10 points",
             font='Open Sans',
@@ -1351,17 +1374,12 @@ class Dimensionality(Slide):
         #     stroke_width=2.5,
         #     tip_length=0.2,
         # ).next_to(one_d, 5 * RIGHT, aligned_edge=LEFT)
-        self.play(Create(one_d), run_time=0.5)
-        self.next_slide()
-
-        dots1 = VGroup(*[Dot() for i in range(10)]).arrange(RIGHT, buff=0.5)
-        dots1.next_to(text, 8 * DOWN, aligned_edge=UP)
-        self.play(Create(dots1), run_time=0.5)
-        self.play(Create(one_count), run_time=0.5)
+        self.play(AddTextLetterByLetter(one_d), run_time=0.2)
+        self.play(FadeIn(one_count), run_time=0.1)
         self.next_slide()
 
         dots2 = VGroup(*[Dot() for i in range(100)]).arrange_in_grid(10, 10, buff=0.25)
-        dots2.next_to(text, DOWN)
+        dots2.move_to(dots1.get_center())
         two_d = Text(
             "in 2D:",
             font='Open Sans',
@@ -1402,6 +1420,26 @@ class Dimensionality(Slide):
             run_time=0.5,
         )
         self.next_slide()
+
+        equation = Tex(r"$E = E(x_1, y_1, z_1, x_2, y_2, z_2, ... )$").shift(2 * DOWN)
+        brace = Brace(equation[0][4:-1], color=NUCLEUS_COLOR)
+        self.play(Write(equation, run_time=0.5))
+        self.play(Create(brace))
+        self.next_slide()
+        texts = []
+        for number in [10, 100, 1000]:
+            text = Text(
+                str(number),
+                font='Open Sans',
+                font_size=300,
+                color=NUCLEUS_COLOR,
+            ).scale(0.1).next_to(brace, DOWN)
+            texts.append(text)
+        self.play(FadeIn(texts[0], run_time=0.5))
+        self.play(ReplacementTransform(texts[0], texts[1]), run_time=0.5)
+        self.play(ReplacementTransform(texts[1], texts[2]), run_time=0.5)
+        self.next_slide()
+
         thousand_d = Text(
             "in 1000D:",
             font='Open Sans',
@@ -1484,4 +1522,443 @@ class Images(Slide):
         self.next_slide()
 
         self.play(AddTextLetterByLetter(atoms), run_time=0.5)
+        self.next_slide()
+
+
+class Network(Slide):
+
+    def network(self, *sizes):
+        layers = []
+        for j, size in enumerate(sizes):
+            kwargs = dict(
+                radius=0.05,
+                z_index=1,
+                fill_color=BLACK,
+                fill_opacity=1.0,
+                stroke_color=WHITE,
+                stroke_width=2,
+            )
+            dots = [Circle(**kwargs) for i in range(size)]
+            VGroup(*dots).arrange(RIGHT, buff=0.3).shift(j * DOWN)
+            layers.append(dots)
+
+        weights = []
+        # p = 0.2
+        for i in range(1, len(layers)):
+            layer = layers[i]
+            other = layers[i - 1]
+            per_layer_weights = []
+            for k in range(len(layer)):
+                for l in range(len(other)):
+                    line = Line(
+                        other[l].get_center(),
+                        layer[k].get_center(),
+                        stroke_width=1,
+                        color=GRAY,
+                        z_index=0,
+                    )
+                    per_layer_weights.append(line)
+            weights.append(per_layer_weights)
+        return layers, weights
+
+    def construct(self):
+        # "a systematic way of building complex functions"
+        self.wait_time_between_slides = 0.05
+        title = Text(
+            "neural networks",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        layers, weights = self.network(5, 10, 20, 8, 1)
+        network = VGroup(*[m for mlist in weights + layers for m in mlist])
+        network.center().shift(2 * LEFT + 0.5 * DOWN)
+        top = VGroup(*layers[0]).get_center() + 0.5 * UP
+        bottom = VGroup(*layers[-1]).get_center() + 0.5 * DOWN
+        r = Tex(r"XYZ").move_to(top)
+        qm = Square(1.5, fill_opacity=0.0, fill_color=WHITE).move_to((top + bottom) / 2)
+        E = Tex(r"$E, \nabla E$").move_to(bottom)
+
+        arrow = Arrow(r.get_bottom(), qm.get_top())
+        arrow_ = arrow.copy().next_to(qm, DOWN, buff=0.3)
+        label = Text(
+            "QM",
+            font='Open Sans',
+            font_size=300,
+            fill_color=WHITE,
+            fill_opacity=1.0,
+        ).scale(0.1).move_to(qm.get_center())
+
+        QM = VGroup(r, qm, arrow, arrow_, E, label)
+        self.play(Create(QM), run_time=0.5)
+        self.next_slide()
+
+        self.play(FadeOut(VGroup(arrow, arrow_, qm, label)), run_time=0.5)
+        for layer, per_layer_weights in zip(layers[:-1], weights):
+            anim_dots = LaggedStart(
+                *[Create(d) for d in layer],
+                lag_ratio=0.1,
+                run_time=0.3,
+            )
+            anim_lines = LaggedStart(
+                *[Create(d) for d in per_layer_weights],
+                lag_ratio=0.1,
+                run_time=0.3,
+            )
+            self.play(anim_dots, anim_lines)
+        self.play(Create(layers[-1][0]), run_time=0.1)
+        self.next_slide()
+
+        learning = Text(
+            "learns from examples",
+            font='Open Sans',
+            font_size=250,
+            color=WHITE,
+        ).scale(0.10).next_to(network).shift(UP + RIGHT)
+        train = Tex(
+            r"XYZ $\longrightarrow E, \nabla E$",
+            color=NUCLEUS_COLOR,
+        ).next_to(learning, DOWN)
+        self.play(AddTextLetterByLetter(learning), run_time=0.5)
+        self.play(Create(train), run_time=0.5)
+        self.next_slide()
+        all_weights = [w for weight in weights for w in weight]
+        anims = [w.animate.set_color(NUCLEUS_COLOR).build() for w in all_weights]
+        self.play(*anims)
+        self.next_slide()
+
+
+class GNN(Slide):
+
+    def points(self):
+        return np.array([
+            [4, 2, 0],
+            [2, 1, 0],
+            [0, 0, 0],
+            [-2, -1, 0],
+            [-1, -1, 0],
+            [-3, -2.5, 0],
+            ])
+
+    def dots(self, positions):
+        return [Dot(radius=0.12, z_index=1).move_to(p) for p in positions]
+
+    def feats(self, positions, blue=False, red=False):
+        width, height = 0.3, 0.9
+        rectangles = []
+        for i, position in enumerate(positions):
+            rectangle = Rectangle(
+                width=width,
+                height=height,
+                color=WHITE,
+                fill_color=WHITE,
+                fill_opacity=0.0,
+                stroke_width=1.5,
+            ).move_to(position, aligned_edge=DOWN).shift(0.15 * UP)
+            if i == 1:
+                rectangle.shift(0.3 * LEFT)
+            if i == 4:
+                rectangle.shift(0.3 * RIGHT)
+            rectangles.append(rectangle)
+        return rectangles
+
+    def bonds(self, positions):
+        distances = np.linalg.norm(
+            positions.reshape(1, 6, 3) - positions.reshape(6, 1, 3),
+            axis=2
+        )
+        bonds = []
+        for i in range(6):
+            for j in range(i + 1, 6):
+                if distances[i, j] < 4.0:
+                    bond = Line(
+                        positions[i],
+                        positions[j],
+                        z_index=0,
+                        color=WHITE,
+                    )
+                    bonds.append(bond)
+        return bonds
+
+    def message(self, bonds, color=MESSAGE_COLOR):
+        messages = []
+        for bond in bonds:
+            for direction in [+1, -1]:
+                m = Square(
+                    0.3,
+                    fill_color=color,
+                    stroke_color=WHITE,
+                    fill_opacity=1.0,
+                    stroke_width=1.5,
+                )
+                if direction == -1:
+                    bond = bond.copy().rotate(np.pi)
+                message = Succession(
+                    MoveAlongPath(m, bond),
+                    FadeOut(m),
+                    run_time=1.5,
+                )
+                messages.append(message)
+        return messages
+
+    def add_to_feats(self, feats, iteration=0, color=MESSAGE_COLOR):
+        blocks = []
+        for feat in feats:
+            m = Square(
+                0.3,
+                fill_color=color,
+                stroke_color=WHITE,
+                fill_opacity=1.0,
+                stroke_width=1.5,
+            )
+            shift = (feat.height - m.side_length) / 2 - iteration * 0.3
+            m.move_to(feat.get_center()).shift(shift * DOWN)
+            blocks.append(m)
+        return blocks
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        title = Text(
+            "geometric graph neural networks",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+        self.play(Wait())
+        self.next_slide()
+
+        # draw waters
+        waters = []
+        for i in range(2):
+            atoms = [
+                Circle(radius=0.8, color=OXYGEN_COLOR, fill_opacity=1.0, stroke_color=WHITE),
+                Circle(radius=0.5, color=GRAY, fill_opacity=1.0, stroke_color=WHITE),
+                Circle(radius=0.5, color=GRAY, fill_opacity=1.0, stroke_color=WHITE),
+            ]
+            for i, position in enumerate(1.2 * np.array([[0, 0], [-1, -1], [1, -1]])):
+                atoms[i].move_to(np.array(list(position) + [0]))
+            bonds = [
+                Line(atoms[0].get_center(), atoms[1].get_center(), stroke_width=40),
+                Line(atoms[0].get_center(), atoms[2].get_center(), stroke_width=40),
+            ]
+            for bond in bonds:
+                bond.set_z_index(0)
+            for atom in atoms:
+                atom.set_z_index(1)
+            waters.append((atoms, bonds))
+
+        # shift and rotate one
+        gwaters = [
+            VGroup(*(waters[0][0] + waters[0][1])),
+            VGroup(*(waters[1][0] + waters[1][1])),
+        ]
+        gwaters[0].rotate(np.pi / 4).shift(3 * LEFT)
+        gwaters[1].rotate(np.pi / 2).shift(2 * RIGHT + 0.3 * UP)
+        # for gwater in gwaters:
+        #     gwater.shift(0.5 * DOWN)
+        self.add(*gwaters)
+        self.play(Wait())
+        self.next_slide()
+
+        atoms = [a for i in range(2) for a in waters[i][0]]
+        bonds = [b for i in range(2) for b in waters[i][1]]
+        anims = []
+        dot_positions = np.zeros((6, 3))
+        for i, atom in enumerate(atoms):
+            dot_positions[i] = np.array(atom.get_center())
+        dots = self.dots(dot_positions)
+        for dot, atom in zip(dots, atoms):
+            anims.append(ReplacementTransform(atom, dot))
+        self.play(*[FadeOut(b) for b in bonds], run_time=0.2)
+        self.play(*anims, run_time=0.5)
+        self.next_slide()
+
+        circle = Circle(
+            radius=2.5,
+            fill_color=WHITE,
+            fill_opacity=0.0,
+            color=WHITE,
+            stroke_width=4,
+        )
+        circle = DashedVMobject(circle, dashed_ratio=0.3, num_dashes=40)
+        circle.move_to(dot_positions[-1])
+        self.play(Create(circle), run_time=0.5)
+        self.next_slide()
+
+        bonds = self.bonds(dot_positions)
+        self.play(
+            Create(bonds[-1]),
+            Create(bonds[-2]),
+            run_time=0.5,
+        )
+        self.play(FadeOut(circle), run_time=0.5)
+        self.next_slide()
+
+        self.play(*[Create(b) for b in bonds[:-2]], run_time=0.5)
+        self.next_slide()
+
+        feats = self.feats(dot_positions)
+        self.play(*[Create(f) for f in feats], run_time=0.5)
+        self.next_slide()
+
+        self.play(*[FadeOut(b) for b in bonds], run_time=0.5)
+        self.next_slide()
+
+        messages = self.message(bonds)
+        blocks0 = self.add_to_feats(feats)
+        self.play(*messages)
+        self.play(*[FadeIn(block) for block in blocks0])
+        message_passing = Text(
+            '"message passing"',
+            font='Open Sans',
+            font_size=250,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1).next_to(title, DOWN).shift(DOWN)
+        self.play(AddTextLetterByLetter(message_passing, run_time=0.3))
+        self.next_slide()
+
+        messages = self.message(bonds, color=MESSAGE0_COLOR)
+        blocks1 = self.add_to_feats(feats, iteration=1, color=MESSAGE0_COLOR)
+        self.play(*messages)
+        self.play(*[FadeIn(block) for block in blocks1])
+        self.next_slide()
+
+        blocks2 = self.add_to_feats(feats, iteration=2, color=MESSAGE1_COLOR)
+        self.play(*[FadeIn(block) for block in blocks2])
+        self.play(*[FadeIn(b) for b in bonds])
+        self.play(*[FadeOut(f) for f in feats], run_time=0.1)
+        self.next_slide()
+
+        blocks_per_node = []
+        for i in range(6):
+            blocks_per_node.append(VGroup(blocks0[i], blocks1[i], blocks2[i]))
+
+        everything = VGroup(*(dots + bonds + blocks_per_node))
+        self.play(everything.animate.scale(0.5).shift(3 * LEFT), run_time=0.5)
+        blocks = [block.copy() for block in blocks_per_node]
+        self.play(VGroup(*blocks).animate.arrange(DOWN, buff=0.5).shift(3 * RIGHT))
+        function = Tex(r"$f_{\text{\sffamily read}}(\qquad) = $")
+        function.move_to(blocks[0].get_center())
+        anims = []
+        energy0 = Tex(r"$E_1$").next_to(function, RIGHT)
+        self.play(
+            FadeIn(function, run_time=0.5),
+            FadeIn(energy0, run_time=0.5),
+        )
+        for i in range(1, 6):
+            function_ = function.copy().move_to(blocks[i].get_center())
+            energy = Tex("$E_" + str(i + 1) + "$").next_to(function_, RIGHT)
+            self.play(Succession(
+                ReplacementTransform(function, function_),
+                FadeIn(energy, run_time=0.5),
+                ),
+                run_time=0.5,
+            )
+            function = function_
+        readout = Tex(r"$f_{\text{\sffamily read}}$").next_to(function, LEFT)
+        self.play(
+            ReplacementTransform(function, readout, run_time=0.5),
+        )
+        self.next_slide()
+
+        line = Line(ORIGIN, RIGHT).next_to(energy, DOWN)
+        plus = Tex("$+$").next_to(line, RIGHT)
+        E = Tex("$E$").next_to(line, DOWN)
+        self.play(
+            Create(line),
+            Create(plus),
+            Create(E),
+            run_time=0.5,
+        )
+        self.next_slide()
+
+
+class OverviewGNN(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        boxes = generate_periodic_table()
+        table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
+        self.play(Create(table), run_time=1)
+        self.next_slide()
+
+        physics = Text(
+            'laws of physics?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        simulation = Text(
+            'challenges?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        solution = Text(
+            'solution?',
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1)
+        goals = VGroup(physics, simulation, solution).arrange(
+            RIGHT,
+            buff=2.5,
+            aligned_edge=UP,
+        )
+        goals.shift(2 * DOWN)
+        self.play(AddTextLetterByLetter(physics), run_time=0.5)
+        self.play(AddTextLetterByLetter(simulation), run_time=0.5)
+        self.play(AddTextLetterByLetter(solution), run_time=0.5)
+        self.next_slide()
+
+        nuclei = Text(
+            'classical (nuclei)',
+            font='Open Sans',
+            font_size=250,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1)
+        electrons = Text(
+            'quantum (electrons)',
+            font='Open Sans',
+            font_size=250,
+            color=QM_COLOR,
+        ).scale(0.1)
+        laws = VGroup(nuclei, electrons).arrange(
+            DOWN,
+            buff=0.2,
+            # aligned_edge=LEFT,
+        ).next_to(physics, DOWN)
+        self.play(FadeIn(laws), run_time=0.4)
+
+        newton = Tex(r"$\overrightarrow{F}=m\overrightarrow{a}$", color=WHITE)
+        newton[0][0].set_color(QM_COLOR)
+        evaluations = Text(
+            '# evaluations',
+            font='Open Sans',
+            font_size=250,
+            color=WHITE,
+        ).scale(0.1)
+        challenges = VGroup(newton, evaluations).arrange(
+            DOWN,
+            buff=0.2,
+        ).next_to(simulation, 0.4 * DOWN)
+        self.play(FadeIn(challenges))
+        self.next_slide()
+
+        gnn = Text(
+            'graph neural\n   networks',
+            font='Open Sans',
+            font_size=250,
+            color=NUCLEUS_COLOR,
+        ).scale(0.1).next_to(solution, DOWN)
+        self.play(FadeIn(gnn))
+        self.next_slide()
+
+
+class Three(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+
+        self.play(Wait())
         self.next_slide()
