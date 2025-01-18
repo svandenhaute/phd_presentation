@@ -1,5 +1,6 @@
 media/
 slides/
 videos/
+scene_assets/
 *.html
 *.log
