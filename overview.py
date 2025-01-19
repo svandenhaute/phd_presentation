@@ -1,2 +1,0 @@
-def challenges():
-    pass

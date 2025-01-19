@@ -13,7 +13,7 @@ from manim import (
     MoveAlongPath, LaggedStart,
     f_always, linear, always,
     WHITE, BLACK, ManimColor, BLUE, RED, GRAY, DARK_GRAY,
-    DOWN, LEFT, RIGHT, UP, ORIGIN, UL, UR,
+    DOWN, LEFT, RIGHT, UP, ORIGIN, UL, UR, DR,
 )
 from manim.utils.rate_functions import ease_in_out_expo
 from manim_slides import Slide, ThreeDSlide
@@ -39,6 +39,8 @@ MID = ManimColor.from_rgb((196, 128, 10))
 PRO = ManimColor.from_rgb((21, 148, 82))
 tex_template = TexTemplate(preamble='\\usepackage{amsmath}\n\\usepackage{esvect}')
 
+SLIDE_NUMBER_FONTSIZE = 25
+
 
 class Title(Slide):
 
@@ -49,10 +51,11 @@ class Title(Slide):
         self.wait()
 
 
-class Particles(Slide):
+class Particles(Slide):  # 1
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("1", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         globe = SVGMobject('images/globe_color.svg')
         globe.scale(2)
 
@@ -128,7 +131,7 @@ class Particles(Slide):
         self.next_slide()
 
 
-class PeriodicTable(Slide):
+class PeriodicTable(Slide):  # 2
 
     def highlight(self, elements, boxes):
         self.wait_time_between_slides = 0.05
@@ -163,6 +166,7 @@ class PeriodicTable(Slide):
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("2", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         boxes = generate_periodic_table()
         table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
         self.play(Create(table), run_time=1)
@@ -218,10 +222,11 @@ class PeriodicTable(Slide):
         self.next_slide()
 
 
-class Masses(Slide):
+class Masses(Slide):  # 3
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("3", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         positions = 2 * np.array([
             [-0.1, 0.3, 0],
             [0.7, 0.5, 0],
@@ -535,10 +540,11 @@ class Masses(Slide):
         self.next_slide()
 
 
-class Dynamics(Slide):
+class Dynamics(Slide):  # 4
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("4", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         equilibrium_distance = 1.5
         positions = np.array([
             [equilibrium_distance / 2, 0, 0],
@@ -688,14 +694,15 @@ class Dynamics(Slide):
         self.next_slide()
 
 
-class OverviewPhysics(Slide):
+class OverviewPhysics(Slide):  # 5
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("5", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         boxes = generate_periodic_table()
         table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
-        self.play(Create(table), run_time=1)
+        self.add(table)
 
         physics = Text(
             'laws of physics?',
@@ -718,9 +725,9 @@ class OverviewPhysics(Slide):
             aligned_edge=UP,
         )
         goals.shift(2 * DOWN)
-        self.play(AddTextLetterByLetter(physics), run_time=0.5)
-        self.play(AddTextLetterByLetter(simulation), run_time=0.5)
-        self.play(AddTextLetterByLetter(solution), run_time=0.5)
+        self.add(physics)
+        self.add(simulation)
+        self.add(solution)
         self.next_slide()
 
         nuclei = Text(
@@ -759,10 +766,11 @@ class OverviewPhysics(Slide):
         # self.next_slide()
 
 
-class TimeEvolution(Slide):
+class TimeEvolution(Slide):  # 6
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("6", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         frequency = 119e12 * 1e-15  # period ~ 8 fs
         time_offset = 2
 
@@ -918,10 +926,11 @@ class TimeEvolution(Slide):
         self.next_slide()
 
 
-class TimeScales(Slide):
+class TimeScales(Slide):  # 7
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("7", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         files = [f'images/timescales/timescales_Layer_{i + 2}.png' for i in range(4)]
         parts = Group(*[ImageMobject(file).center().scale(0.5) for file in files])
         parts.scale(0.8).shift(UP)
@@ -1018,14 +1027,15 @@ class TimeScales(Slide):
         self.next_slide()
 
 
-class Overview(Slide):
+class Overview(Slide):  # 8
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("8", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         boxes = generate_periodic_table()
         table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
-        self.play(Create(table), run_time=1)
+        self.add(table)
         self.next_slide()
 
         physics = Text(
@@ -1049,9 +1059,9 @@ class Overview(Slide):
             aligned_edge=UP,
         )
         goals.shift(2 * DOWN)
-        self.play(AddTextLetterByLetter(physics), run_time=0.5)
-        self.play(AddTextLetterByLetter(simulation), run_time=0.5)
-        self.play(AddTextLetterByLetter(solution), run_time=0.5)
+        self.add(physics)
+        self.add(simulation)
+        self.add(solution)
         self.next_slide()
 
         nuclei = Text(
@@ -1075,7 +1085,7 @@ class Overview(Slide):
         self.next_slide()
 
         newton = Tex(r"$\vec{F}=m\vec{a}$", color=WHITE, tex_template=tex_template)
-        newton[0][0].set_color(QM_COLOR)
+        newton[0][:2].set_color(QM_COLOR)
         evaluations = Text(
             '# evaluations',
             font='Open Sans',
@@ -1085,15 +1095,16 @@ class Overview(Slide):
         challenges = VGroup(newton, evaluations).arrange(
             DOWN,
             buff=0.2,
-        ).next_to(simulation, DOWN)
+        ).next_to(simulation, 0.5 * DOWN)
         self.play(FadeIn(challenges))
         self.next_slide()
 
 
-class HydrogenRevisited(Slide):
+class HydrogenRevisited(Slide):  # 9
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("9", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         axes = Axes((0.0, 8), (-1, 1), x_length=7).scale(0.7).shift(0.5 * LEFT)
         axes.shift(3.0 * LEFT)
         xlabel = Text(
@@ -1192,10 +1203,11 @@ class HydrogenRevisited(Slide):
         self.next_slide()
 
 
-class Priors(Slide):
+class Priors(Slide):  # 10
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("10", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         title = Tex(
             r"\sffamily learning a mapping: XYZ $\longrightarrow$ energy",
         ).to_corner(UP + LEFT)
@@ -1317,10 +1329,11 @@ class Priors(Slide):
         self.next_slide()
 
 
-class Dimensionality(Slide):
+class Dimensionality(Slide):  # 11
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("11", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         title = Text(
             "the curse of dimensionality",
@@ -1462,10 +1475,11 @@ class Dimensionality(Slide):
         self.next_slide()
 
 
-class Images(Slide):
+class Images(Slide):  # 12
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("12", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         title = Tex(r"\sffamily analogy: images")
         title.to_corner(UL)
@@ -1531,7 +1545,7 @@ class Images(Slide):
         self.next_slide()
 
 
-class Network(Slide):
+class Network(Slide):  # 13
 
     def network(self, *sizes):
         layers = []
@@ -1570,6 +1584,7 @@ class Network(Slide):
     def construct(self):
         # "a systematic way of building complex functions"
         self.wait_time_between_slides = 0.05
+        self.add(Text("13", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         title = Text(
             "neural networks",
             font='Open Sans',
@@ -1635,7 +1650,7 @@ class Network(Slide):
         self.next_slide()
 
 
-class GNN(Slide):
+class GNN(Slide):  # 14
 
     def points(self):
         return np.array([
@@ -1725,6 +1740,7 @@ class GNN(Slide):
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("14", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         title = Text(
             "geometric graph neural networks",
@@ -1881,14 +1897,15 @@ class GNN(Slide):
         self.next_slide()
 
 
-class OverviewGNN(Slide):
+class OverviewGNN(Slide):  # 15
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("15", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         boxes = generate_periodic_table()
         table = VGroup(*sum(boxes.values(), start=())).center().shift(1.3 * UP)
-        self.play(Create(table), run_time=1)
+        self.add(table)
         self.next_slide()
 
         physics = Text(
@@ -1912,9 +1929,9 @@ class OverviewGNN(Slide):
             aligned_edge=UP,
         )
         goals.shift(2 * DOWN)
-        self.play(AddTextLetterByLetter(physics), run_time=0.5)
-        self.play(AddTextLetterByLetter(simulation), run_time=0.5)
-        self.play(AddTextLetterByLetter(solution), run_time=0.5)
+        self.add(physics)
+        self.add(simulation)
+        self.add(solution)
         self.next_slide()
 
         nuclei = Text(
@@ -1937,7 +1954,7 @@ class OverviewGNN(Slide):
         self.play(FadeIn(laws), run_time=0.4)
 
         newton = Tex(r"$\vec{F}=m\vec{a}$", color=WHITE, tex_template=tex_template)
-        newton[0][0].set_color(QM_COLOR)
+        newton[0][:2].set_color(QM_COLOR)
         evaluations = Text(
             '# evaluations',
             font='Open Sans',
@@ -1955,13 +1972,14 @@ class OverviewGNN(Slide):
             'graph neural\n   networks',
             font='Open Sans',
             font_size=250,
-            color=NUCLEUS_COLOR,
+            color=WHITE,
+            weight="BOLD",
         ).scale(0.1).next_to(solution, DOWN)
         self.play(FadeIn(gnn))
         self.next_slide()
 
 
-class Three(Slide):
+class Three(Slide):  # 16
 
     def gnn(self):
         message_passing = Text(
@@ -2002,6 +2020,7 @@ class Three(Slide):
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("16", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         title = Text(
             "so... the phd itself?",
             font='Open Sans',
@@ -2123,10 +2142,11 @@ class Three(Slide):
         self.next_slide()
 
 
-class Systems(Slide):
+class Systems(Slide):  # 17
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("17", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
         title = Text(
@@ -2168,10 +2188,11 @@ class Systems(Slide):
         self.next_slide()
 
 
-class QM(Slide):
+class QM(Slide):  # 18
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("18", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
         title = Text(
@@ -2215,10 +2236,11 @@ class QM(Slide):
         self.next_slide()
 
 
-class HPC(Slide):
+class HPC(Slide):  # 19
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("19", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
 
@@ -2233,7 +2255,7 @@ class HPC(Slide):
         self.next_slide()
 
 
-class LUMI(Slide):
+class LUMI(Slide):  # 20
 
     def construct(self):
         self.wait_time_between_slides = 0.05
@@ -2243,7 +2265,7 @@ class LUMI(Slide):
         self.next_slide()
 
 
-class OnlineLearning(Slide):
+class OnlineLearning(Slide):  # 21
 
     def new_walkers(self, nwalkers):
         walkers = VGroup(*[Dot(color=BLACK, z_index=1) for i in range(nwalkers)])
@@ -2284,6 +2306,7 @@ class OnlineLearning(Slide):
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("20", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
         circle = Circle(
@@ -2413,10 +2436,11 @@ class OnlineLearning(Slide):
         self.next_slide()
 
 
-class Hardware(Slide):
+class Hardware(Slide):  # 22
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("22", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
@@ -2441,15 +2465,307 @@ class Hardware(Slide):
             self.next_slide()
 
 
-class Psiflow(Slide):
+class Psiflow(Slide):  # 23
 
     def construct(self):
         self.wait_time_between_slides = 0.05
+        self.add(Text("23", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
 
-        image = ImageMobject('images/logo_light.png')
+        image = ImageMobject('images/logo_light.png').scale_to_fit_width(14)
         self.add(image)
+        self.play(Wait())
+        self.next_slide()
+
+
+class ThreeReview(Slide):  # 24
+
+    def gnn(self):
+        message_passing = Text(
+            "message passing:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1)
+        from_xyz = Tex(r"$\text{\sffamily XYZ} \longrightarrow \quad$").next_to(message_passing, RIGHT)
+        squares = []
+        for color in MESSAGE_COLORS:
+            square = Square(
+                0.3,
+                stroke_color=WHITE,
+                fill_color=color,
+                fill_opacity=1.0,
+                stroke_width=1.5,
+            )
+            squares.append(square)
+        feats = VGroup(*squares[::-1]).arrange(DOWN, buff=0).next_to(from_xyz, RIGHT)
+
+        readout = Text(
+            "readout:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).next_to(message_passing, 3 * DOWN, aligned_edge=LEFT)
+        f_read = Tex(r"$f_{\text{\sffamily read}}(\quad) = E_i$").next_to(readout, 2 * RIGHT)
+        arg = feats.copy().move_to(f_read.get_center() + 0.14 * LEFT)
+
+        content = VGroup(message_passing, from_xyz, feats, readout, f_read, arg)
+        border = SurroundingRectangle(content, color=WHITE, buff=0.2)
+        title = Text(
+            "GNN",
+            font='Open Sans',
+            font_size=250,
+            weight="BOLD",
+        ).scale(0.1).next_to(border, 0.5 * UP, aligned_edge=LEFT)
+        return content, border, title
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("24", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        title = Text(
+            "so... the phd itself?",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        content, border, title = self.gnn()
+        gnn = VGroup(content, border, title).center()
+        self.add(content, gnn)
+
+        numbers = []
+        for i in range(3):
+            circle = Circle(
+                radius=0.25,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+                stroke_color=WHITE,
+                z_index=0,
+            )
+            number = Text(
+                str(i + 1),
+                font="Open Sans",
+                font_size=250,
+                color=BLACK,
+                z_index=1,
+                weight="BOLD",
+            ).scale(0.1)
+            number.move_to(circle.get_center())
+            if i == 0:
+                number.shift(0.02 * LEFT)
+            numbers.append(VGroup(number, circle))
+        gnumbers = VGroup(*numbers).arrange(DOWN, buff=1.5).shift(6.5 * LEFT + 0.5 * DOWN)
+        gnn.scale(0.7).to_corner(UR)
+        self.add(*[e for n in numbers for e in n])
+
+        training = r"$\text{\sffamily GNN} \longleftarrow"
+        training += r"\left\{\text{\sffamily XYZ}, E, \vec{F}\right\}$"
+        training = Tex(training, tex_template=tex_template).next_to(numbers[0], RIGHT)
+        self.add(training.scale(0.9))
+        catch = Text(
+            "on-the-fly learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(training, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(catch)
+
+        no_F = Text(
+            "most accurate QM methods can only do ",
+            color=WHITE,
+            font='Open Sans',
+            font_size=200,
+        ).scale(0.1 * 3 / 2).next_to(numbers[1], 2 * RIGHT)
+        F = Tex(r"$\left\{\text{\sffamily XYZ}, E\right\}$", tex_template=tex_template).next_to(
+            no_F,
+            RIGHT,
+        ).shift(0.0 * UP)
+        transfer = Text(
+            "transfer learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(no_F, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(no_F)
+        self.add(F)
+        # self.play(AddTextLetterByLetter(transfer, run_time=0.3))
+
+        texts = ['computational cost = ', '# steps ', ' x  (cost/step)']
+        mtexts = []
+        for text in texts:
+            mtext = Text(
+                text,
+                font='Open Sans',
+                font_size=200,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+            ).scale(0.1 * 3 / 2)
+            mtexts.append(mtext)
+        VGroup(*mtexts).arrange(RIGHT, buff=0.2).next_to(numbers[2], 2 * RIGHT)
+        self.add(*mtexts)
+
+        to_gray = VGroup(mtexts[0], mtexts[2])
+        to_gray.set_color(DARK_GRAY)
+        self.play(Wait())
+        self.next_slide()
+
+        feats = content[2].copy()
+        feats_ = content[2].copy()
+        self.play(
+            feats.animate.set_y(no_F.get_y()),
+            feats_.animate.set_y(mtexts[0].get_y()),
+        )
+        self.next_slide()
+
+
+class Movie(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        # self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+        self.add(Text("movie isobutene", color=BLACK, z_index=0))
+        self.play(Wait())
+        self.next_slide()
+
+
+class Features(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        # self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        reaction = ImageMobject('images/zeo_isobutene.png').scale(0.6)
+        reaction.to_corner(UL, buff=0.1)
+        self.add(reaction)
+        self.play(Wait())
+        self.next_slide()
+
+        for i in range(5):
+            path = f'images/scatter_Layer_{i + 1}.png'
+            image = ImageMobject(path).scale(0.7).to_corner(DR, buff=0.1)
+            self.add(image)
+            self.play(Wait())
+            self.next_slide()
+
+
+class DeltaLearning(Slide):  # 26
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("26", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        title = Text(
+            "good = bad + (good - bad)",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        message_passing = Text(
+            "message passing:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1)
+        from_xyz = Tex(r"$\text{\sffamily XYZ} \longrightarrow \quad$").next_to(message_passing, RIGHT)
+        squares = []
+        for color in MESSAGE_COLORS:
+            square = Square(
+                0.3,
+                stroke_color=WHITE,
+                fill_color=color,
+                fill_opacity=1.0,
+                stroke_width=1.5,
+            )
+            squares.append(square)
+        feats = VGroup(*squares[::-1]).arrange(DOWN, buff=0).next_to(from_xyz, RIGHT)
+
+        readout = Text(
+            "readout:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).next_to(message_passing, 3 * DOWN, aligned_edge=LEFT)
+        f_read = Tex(r"$f_{\text{\sffamily read}}(\quad) = E_i$").next_to(readout, 2 * RIGHT)
+        arg = feats.copy().move_to(f_read.get_center() + 0.14 * LEFT)
+        content = VGroup(message_passing, from_xyz, feats, readout, f_read, arg)
+        content.center()
+        self.add(content)
+        self.play(Wait())
+        self.next_slide()
+
+        _99 = Text(
+            '~99% of the weights',
+            font='Open Sans',
+            font_size=250,
+            color=ELECTRON_COLOR,
+        ).scale(0.1).next_to(message_passing, LEFT, buff=0.5)
+        _1 = Text(
+            '~1% of the weights',
+            font='Open Sans',
+            font_size=250,
+            color=ELECTRON_COLOR,
+        ).scale(0.1).next_to(readout, LEFT, buff=0.5)
+        self.play(AddTextLetterByLetter(_99), run_time=0.4)
+        self.play(AddTextLetterByLetter(_1), run_time=0.4)
+        self.next_slide()
+
+        delta = Text(
+            "delta:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).next_to(readout, 3 * DOWN, aligned_edge=LEFT)
+        f_delta = Tex(r"$f_{\text{\sffamily delta}}(\quad) = \Delta E_i$").next_to(delta, 2 * RIGHT)
+        arg = feats.copy().move_to(f_delta.get_center() + 0.27 * LEFT)
+        gdelta = VGroup(delta, f_delta, arg)
+        self.play(FadeIn(gdelta), run_time=0.5)
+        self.next_slide()
+
+        border = SurroundingRectangle(content + gdelta, color=WHITE, buff=0.2)
+        title = Text(
+            "augmented GNN",
+            font='Open Sans',
+            font_size=250,
+            weight="BOLD",
+        ).scale(0.1).next_to(border, 0.5 * UP, aligned_edge=LEFT)
+        self.play(Create(border), FadeIn(title), run_time=0.5)
+        self.next_slide()
+
+
+class DeltaLearningFigure(Slide):  # 27
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("27", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        for i in range(4):
+            path = f'images/delta_learning_Layer_{i + 1}.png'
+            image = ImageMobject(path).scale(0.6)
+            self.add(image)
+            self.play(Wait())
+            self.next_slide()
+
+
+class IsobuteneProfile(Slide):  # 28
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        reaction = ImageMobject('images/proton_transfer.png').scale(0.7).to_edge(LEFT)
+        self.add(reaction)
+        self.play(Wait())
+        self.next_slide()
+
+        profile = ImageMobject('images/reaction_profile/reaction_profile.png').scale(1.0)
+        profile.to_edge(RIGHT, buff=0.1)
+        self.add(profile)
         self.play(Wait())
         self.next_slide()
