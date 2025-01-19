@@ -34,6 +34,9 @@ MESSAGE_COLORS = (
     ManimColor.from_rgb((245, 86, 0)),
     ManimColor.from_rgb((245, 0, 45)),
 )
+BAD = ManimColor.from_rgb((235, 73, 52))
+MID = ManimColor.from_rgb((196, 128, 10))
+PRO = ManimColor.from_rgb((21, 148, 82))
 tex_template = TexTemplate(preamble='\\usepackage{amsmath}\n\\usepackage{esvect}')
 
 
@@ -2242,6 +2245,43 @@ class LUMI(Slide):
 
 class OnlineLearning(Slide):
 
+    def new_walkers(self, nwalkers):
+        walkers = VGroup(*[Dot(color=BLACK, z_index=1) for i in range(nwalkers)])
+        walkers.arrange(DOWN, buff=0.09).to_edge(LEFT)
+        walkers.shift(DOWN)
+        return walkers
+
+    def propagate(self, walkers, quality):
+        lines = []
+        start_list = [w.get_center() for w in walkers]
+        offset = np.array([0.001, 0, 0])
+        for i, walker in enumerate(walkers):
+            line = Line(color=quality, z_index=0)
+
+            def updater(m, index):
+                start = start_list[index] - offset  # manim does not like zero-length lines
+                end = walkers[index].get_center()
+                m.put_start_and_end_on(
+                    start,
+                    end,
+                )
+            line.add_updater(partial(updater, index=i))
+            lines.append(line)
+        return lines
+
+    def sample_data(self, walkers, quality):
+        data = VGroup(*[w.copy() for w in walkers])
+        self.play(data.animate.shift(4 * RIGHT), run_time=0.5)
+        squares = []
+        for i, dot in enumerate(data):
+            square = Square(0.15, fill_color=quality, fill_opacity=1.0, stroke_opacity=0.0)
+            squares.append(square)
+            square.move_to(dot.get_center())
+        squares = VGroup(*squares)
+        self.play(ReplacementTransform(data, squares), run_time=0.5)
+        self.next_slide()
+        return squares
+
     def construct(self):
         self.wait_time_between_slides = 0.05
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
@@ -2274,7 +2314,103 @@ class OnlineLearning(Slide):
         self.play(AddTextLetterByLetter(title, run_time=0.3))
         self.next_slide()
 
-        nwalkers = 50
+        basket = [
+            Line(ORIGIN, DOWN, color=BLACK),
+            Line(DOWN, DOWN + RIGHT, color=BLACK),
+            Line(DOWN + RIGHT, RIGHT, color=BLACK),
+        ]
+        width = 2
+        basket = VGroup(*basket).scale(width).set_x(6)
+        data = Text("data", font='Open Sans', font_size=250, color=BLACK).scale(0.1)
+        data.next_to(basket, DOWN)
+        basket.add(data)
+        self.play(*[Create(b) for b in basket], run_time=0.5)
+        self.next_slide()
+
+        model_quality = Text(
+            'GNN quality: ',
+            font='Open Sans',
+            font_size=250,
+            color=BLACK,
+        ).scale(0.1).to_corner(UR).shift(2 * LEFT)
+        bad = Text(
+            'bad',
+            font='Open Sans',
+            font_size=250,
+            color=BAD,
+            weight="BOLD",
+        ).scale(0.1).next_to(model_quality, RIGHT)
+        self.play(AddTextLetterByLetter(model_quality), run_time=0.4)
+        self.play(AddTextLetterByLetter(bad), run_time=0.1)
+        self.next_slide()
+
+        nwalkers = 20
+        walkers = self.new_walkers(nwalkers)
+        self.play(*[Create(w) for w in walkers], run_time=1.0)
+        self.next_slide()
+
+        lines = self.propagate(walkers, quality=BAD)
+        self.add(*lines)
+        self.play(*[w.animate.shift(RIGHT) for w in walkers], run_time=1)
+        self.next_slide()
+
+        squares = self.sample_data(walkers, BAD)
+        final_BAD = VGroup(*[s.copy() for s in squares]).scale(0.8)
+        final_BAD.arrange_in_grid(cols=10, buff=0.05).next_to(basket[1], UP)
+        self.play(ReplacementTransform(squares, final_BAD), run_time=0.5)
+        self.next_slide()
+
+        x = walkers.get_x()
+        walkers = self.new_walkers(nwalkers).set_x(x)
+        self.play(*[w.animate.shift(0.3 * RIGHT) for w in walkers], run_time=0.3)
+        self.next_slide()
+
+        mid = Text(
+            'mid',
+            font='Open Sans',
+            font_size=250,
+            color=MID,
+            weight="BOLD",
+        ).scale(0.1).next_to(model_quality, RIGHT)
+        self.play(ReplacementTransform(bad, mid))
+        self.next_slide()
+
+        lines = self.propagate(walkers, quality=MID)
+        self.add(*lines)
+        self.play(*[w.animate.shift(2 * RIGHT) for w in walkers], run_time=1)
+        self.next_slide()
+
+        squares = self.sample_data(walkers, MID)
+        final_MID = VGroup(*[s.copy() for s in squares]).scale(0.8)
+        final_MID.arrange_in_grid(cols=10, buff=0.05).next_to(final_BAD, UP)
+        self.play(ReplacementTransform(squares, final_MID), run_time=0.5)
+        self.next_slide()
+
+        x = walkers.get_x()
+        walkers = self.new_walkers(nwalkers).set_x(x)
+        self.play(*[w.animate.shift(0.3 * RIGHT) for w in walkers], run_time=0.3)
+        self.next_slide()
+
+        pro = Text(
+            'high',
+            font='Open Sans',
+            font_size=250,
+            color=PRO,
+            weight="BOLD",
+        ).scale(0.1).next_to(model_quality, RIGHT)
+        self.play(ReplacementTransform(mid, pro))
+        self.next_slide()
+
+        lines = self.propagate(walkers, quality=PRO)
+        self.add(*lines)
+        self.play(*[w.animate.shift(3 * RIGHT) for w in walkers], run_time=1)
+        self.next_slide()
+
+        squares = self.sample_data(walkers, PRO)
+        final_PRO = VGroup(*[s.copy() for s in squares]).scale(0.8)
+        final_PRO.arrange_in_grid(cols=10, buff=0.05).next_to(final_MID, UP)
+        self.play(ReplacementTransform(squares, final_PRO), run_time=0.5)
+        self.next_slide()
 
 
 class Hardware(Slide):

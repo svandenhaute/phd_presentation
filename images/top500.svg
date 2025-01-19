@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="282.05875pt"
+   width="276.9475pt"
    height="150.029375pt"
-   viewBox="0 0 282.05875 150.029375"
+   viewBox="0 0 276.9475 150.029375"
    version="1.1"
-   id="svg153"
+   id="svg145"
    sodipodi:docname="top500.svg"
    inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -16,7 +16,7 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
-     id="namedview153"
+     id="namedview145"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -25,11 +25,11 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="pt"
-     inkscape:zoom="5.9030256"
-     inkscape:cx="177.28197"
-     inkscape:cy="107.48725"
-     inkscape:window-width="3840"
-     inkscape:window-height="2160"
+     inkscape:zoom="3.9629638"
+     inkscape:cx="150.01399"
+     inkscape:cy="82.64017"
+     inkscape:window-width="1920"
+     inkscape:window-height="1200"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -40,7 +40,7 @@
       <cc:Work>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:date>2025-01-18T20:11:42.913971</dc:date>
+        <dc:date>2025-01-19T11:16:21.633738</dc:date>
         <dc:format>image/svg+xml</dc:format>
         <dc:creator>
           <cc:Agent>
@@ -57,28 +57,26 @@
        id="style1">*{stroke-linejoin: round; stroke-linecap: butt}</style>
   </defs>
   <defs
-     id="defs153">
+     id="defs145">
     <clipPath
-       id="pf52ba5ed8a">
+       id="pcbbf7e3708">
       <rect
          x="30.88"
          y="7.2"
          width="156.24"
          height="115.5"
-         id="rect153" />
+         id="rect145" />
     </clipPath>
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer1"
-     inkscape:label="Layer 1">
-    <g
-       id="patch_1">
-      <path
-         d="M 0,150.02937 H 282.05875 V 0 H 0 Z"
-         style="fill:none"
-         id="path1" />
-    </g>
+     inkscape:label="Layer 1"
+     style="display:inline">
+    <path
+       d="M 0,150.02937 H 276.9475 V 0 H 0 Z"
+       style="fill:none"
+       id="path1" />
     <g
        id="patch_2">
       <path
@@ -94,7 +92,7 @@
            id="line2d_1">
           <path
              d="M 67.290909,122.7 V 7.2"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path3" />
         </g>
@@ -103,14 +101,14 @@
           <defs
              id="defs3">
             <path
-               id="mbc9f2bfe7f"
+               id="m33830e3df8"
                d="M 0,0 V -6"
                style="stroke:#000000;stroke-width:0.4" />
           </defs>
           <g
              id="g3">
             <use
-               xlink:href="#mbc9f2bfe7f"
+               xlink:href="#m33830e3df8"
                x="67.290909"
                y="122.7"
                style="stroke:#000000;stroke-width:0.4"
@@ -158,7 +156,7 @@
            id="line2d_3">
           <path
              d="M 112.38182,122.7 V 7.2"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path7" />
         </g>
@@ -167,7 +165,7 @@
           <g
              id="g8">
             <use
-               xlink:href="#mbc9f2bfe7f"
+               xlink:href="#m33830e3df8"
                x="112.38182"
                y="122.7"
                style="stroke:#000000;stroke-width:0.4"
@@ -211,7 +209,7 @@
            id="line2d_5">
           <path
              d="M 157.47273,122.7 V 7.2"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path12" />
         </g>
@@ -220,7 +218,7 @@
           <g
              id="g13">
             <use
-               xlink:href="#mbc9f2bfe7f"
+               xlink:href="#m33830e3df8"
                x="157.47273"
                y="122.7"
                style="stroke:#000000;stroke-width:0.4"
@@ -303,7 +301,7 @@
            id="line2d_7">
           <path
              d="M 30.88,99.8571 H 187.12"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path21" />
         </g>
@@ -312,14 +310,14 @@
           <defs
              id="defs21">
             <path
-               id="m6a6b491b86"
+               id="m792b41e012"
                d="M 0,0 H 6"
                style="stroke:#000000;stroke-width:0.4" />
           </defs>
           <g
              id="g22">
             <use
-               xlink:href="#m6a6b491b86"
+               xlink:href="#m792b41e012"
                x="30.879999"
                y="99.857101"
                style="stroke:#000000;stroke-width:0.4"
@@ -353,7 +351,7 @@
            id="line2d_9">
           <path
              d="M 30.88,71.111135 H 187.12"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path25" />
         </g>
@@ -362,7 +360,7 @@
           <g
              id="g26">
             <use
-               xlink:href="#m6a6b491b86"
+               xlink:href="#m792b41e012"
                x="30.879999"
                y="71.111137"
                style="stroke:#000000;stroke-width:0.4"
@@ -396,7 +394,7 @@
            id="line2d_11">
           <path
              d="M 30.88,42.365169 H 187.12"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path29" />
         </g>
@@ -405,7 +403,7 @@
           <g
              id="g30">
             <use
-               xlink:href="#m6a6b491b86"
+               xlink:href="#m792b41e012"
                x="30.879999"
                y="42.36517"
                style="stroke:#000000;stroke-width:0.4"
@@ -446,7 +444,7 @@
            id="line2d_13">
           <path
              d="M 30.88,13.619203 H 187.12"
-             clip-path="url(#pf52ba5ed8a)"
+             clip-path="url(#pcbbf7e3708)"
              style="fill:none;stroke:#808080;stroke-width:0.25;stroke-linecap:square"
              id="path33" />
         </g>
@@ -455,7 +453,7 @@
           <g
              id="g34">
             <use
-               xlink:href="#m6a6b491b86"
+               xlink:href="#m792b41e012"
                x="30.879999"
                y="13.619203"
                style="stroke:#000000;stroke-width:0.4"
@@ -667,75 +665,62 @@
       </g>
     </g>
     <g
-       id="PathCollection_38">
-      <defs
-         id="defs98">
-        <path
-           id="m3112429c7a"
-           d="M 0,2.5 C 0.663008,2.5 1.29895,2.236584 1.767767,1.767767 2.236584,1.29895 2.5,0.663008 2.5,0 2.5,-0.663008 2.236584,-1.29895 1.767767,-1.767767 1.29895,-2.236584 0.663008,-2.5 0,-2.5 c -0.663008,0 -1.29895,0.263416 -1.767767,0.732233 C -2.236584,-1.29895 -2.5,-0.663008 -2.5,0 c 0,0.663008 0.263416,1.29895 0.732233,1.767767 C -1.29895,2.236584 -0.663008,2.5 0,2.5 Z"
-           style="stroke:#000000;stroke-width:0.4" />
-      </defs>
-      <g
-         clip-path="url(#pf52ba5ed8a)"
-         id="g99" />
-    </g>
-    <g
        id="patch_3">
       <path
          d="M 30.88,122.7 V 7.2"
          style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:miter"
-         id="path99" />
+         id="path98" />
     </g>
     <g
        id="patch_4">
       <path
          d="M 187.12,122.7 V 7.2"
          style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:miter"
-         id="path100" />
+         id="path99" />
     </g>
     <g
        id="patch_5">
       <path
          d="M 30.88,122.7 H 187.12"
          style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:miter"
-         id="path101" />
+         id="path100" />
     </g>
     <g
        id="patch_6">
       <path
          d="M 30.88,7.2 H 187.12"
          style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:square;stroke-linejoin:miter"
-         id="path102" />
+         id="path101" />
     </g>
     <g
        id="legend_1">
       <g
          id="patch_7">
         <path
-           d="m 191.12,91.646875 h 83.73875 V 38.253125 H 191.12 Z"
+           d="m 191.12,85.9075 h 78.6275 V 43.9925 H 191.12 Z"
            style="fill:#ffffff;stroke:#ffffff;stroke-linejoin:miter"
-           id="path103" />
+           id="path102" />
       </g>
       <g
-         id="PathCollection_39">
+         id="PathCollection_38">
         <g
-           id="g103">
+           id="g102">
           <use
-             xlink:href="#m20c503180f"
+             xlink:href="#mf2b39f9658"
              x="199.12"
-             y="41.753124"
+             y="47.4925"
              style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
-             id="use103" />
+             id="use102" />
         </g>
       </g>
       <g
          id="text_10">
         <!-- United States -->
         <g
-           transform="matrix(0.08,0,0,-0.08,210.32,43.853125)"
-           id="g116">
+           transform="matrix(0.08,0,0,-0.08,210.32,49.5925)"
+           id="g115">
           <defs
-             id="defs103">
+             id="defs102">
             <path
                id="LinBiolinum-55"
                d="m 3481,2847 q 0,825 -62,1281 l 12,19 q 116,-19 224,-19 108,0 223,19 l 13,-19 q -63,-422 -63,-1281 V 1888 Q 3828,953 3453,445 3078,-63 2156,-63 1906,-63 1673,4 1441,72 1200,231 959,391 812,720 666,1050 666,1509 v 1338 q 0,825 -63,1281 l 13,19 q 115,-19 326,-19 211,0 327,19 l 12,-19 q -62,-422 -65,-1281 V 1722 q 0,-1428 1075,-1428 312,0 537,90 225,91 350,222 125,132 195,342 71,211 89,392 19,182 19,432 z"
@@ -775,77 +760,77 @@
           </defs>
           <use
              xlink:href="#LinBiolinum-55"
-             id="use104" />
+             id="use103" />
           <use
              xlink:href="#LinBiolinum-6e"
              x="69.189453"
-             id="use105" />
+             id="use104" />
           <use
              xlink:href="#LinBiolinum-69"
              x="123.04688"
-             id="use106" />
+             id="use105" />
           <use
              xlink:href="#LinBiolinum-74"
              x="149.02344"
-             id="use107" />
+             id="use106" />
           <use
              xlink:href="#LinBiolinum-65"
              x="183.00781"
-             id="use108" />
+             id="use107" />
           <use
              xlink:href="#LinBiolinum-64"
              x="228.27148"
-             id="use109" />
+             id="use108" />
           <use
              xlink:href="#LinBiolinum-20"
              x="281.25"
-             id="use110" />
+             id="use109" />
           <use
              xlink:href="#LinBiolinum-53"
              x="306.25"
-             id="use111" />
+             id="use110" />
           <use
              xlink:href="#LinBiolinum-74"
              x="356.83594"
-             id="use112" />
+             id="use111" />
           <use
              xlink:href="#LinBiolinum-61"
              x="390.82031"
-             id="use113" />
+             id="use112" />
           <use
              xlink:href="#LinBiolinum-74"
              x="438.91602"
-             id="use114" />
+             id="use113" />
           <use
              xlink:href="#LinBiolinum-65"
              x="472.90039"
-             id="use115" />
+             id="use114" />
           <use
              xlink:href="#LinBiolinum-73"
              x="518.16406"
-             id="use116" />
+             id="use115" />
         </g>
       </g>
       <g
-         id="PathCollection_40">
+         id="PathCollection_39">
         <g
-           id="g117">
+           id="g116">
           <use
-             xlink:href="#m550516105d"
+             xlink:href="#m9d5bc08a16"
              x="199.12"
-             y="53.231876"
+             y="58.971249"
              style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
-             id="use117" />
+             id="use116" />
         </g>
       </g>
       <g
          id="text_11">
         <!-- Japan -->
         <g
-           transform="matrix(0.08,0,0,-0.08,210.32,55.331875)"
-           id="g122">
+           transform="matrix(0.08,0,0,-0.08,210.32,61.07125)"
+           id="g121">
           <defs
-             id="defs117">
+             id="defs116">
             <path
                id="LinBiolinum-4a"
                d="m 897,609 v 2238 q 0,825 -66,1281 l 13,19 q 115,-19 328,-19 219,0 331,19 l 6,-19 q -62,-422 -62,-1281 V 750 q 0,-544 -74,-787 -73,-244 -329,-579 -378,-487 -1013,-484 -197,0 -287,56 l -7,19 q 79,134 179,525 l 71,6 q 122,-225 372,-222 179,0 294,118 116,117 163,342 47,225 64,411 17,186 17,454 z"
@@ -853,45 +838,45 @@
           </defs>
           <use
              xlink:href="#LinBiolinum-4a"
-             id="use118" />
+             id="use117" />
           <use
              xlink:href="#LinBiolinum-61"
              x="31.982422"
-             id="use119" />
+             id="use118" />
           <use
              xlink:href="#LinBiolinum-70"
              x="80.078125"
-             id="use120" />
+             id="use119" />
           <use
              xlink:href="#LinBiolinum-61"
              x="132.37305"
-             id="use121" />
+             id="use120" />
           <use
              xlink:href="#LinBiolinum-6e"
              x="180.46875"
-             id="use122" />
+             id="use121" />
         </g>
       </g>
       <g
-         id="PathCollection_41">
+         id="PathCollection_40">
         <g
-           id="g123">
+           id="g122">
           <use
-             xlink:href="#m0a2ec7986c"
+             xlink:href="#m32fde195a2"
              x="199.12"
-             y="64.710625"
+             y="70.449997"
              style="fill:#d7553b;stroke:#000000;stroke-width:0.4"
-             id="use123" />
+             id="use122" />
         </g>
       </g>
       <g
          id="text_12">
         <!-- China -->
         <g
-           transform="matrix(0.08,0,0,-0.08,210.32,66.810625)"
-           id="g128">
+           transform="matrix(0.08,0,0,-0.08,210.32,72.55)"
+           id="g127">
           <defs
-             id="defs123">
+             id="defs122">
             <path
                id="LinBiolinum-43"
                d="m 2431,4213 q 347,0 695,-71 349,-70 524,-145 l 178,-75 13,-19 q -110,-459 -128,-709 l -66,-6 q -359,721 -1303,721 -213,0 -437,-98 -223,-98 -436,-297 -212,-198 -346,-558 -134,-359 -134,-818 0,-488 157,-904 158,-415 500,-693 343,-278 815,-278 440,0 729,140 289,141 636,519 L 3981,800 Q 3322,-63 2406,-63 q -659,0 -1142,309 -483,310 -708,774 -225,464 -225,996 0,922 634,1559 635,638 1466,638 z"
@@ -903,52 +888,56 @@
           </defs>
           <use
              xlink:href="#LinBiolinum-43"
-             id="use124" />
+             id="use123" />
           <use
              xlink:href="#LinBiolinum-68"
              x="67.675781"
-             id="use125" />
+             id="use124" />
           <use
              xlink:href="#LinBiolinum-69"
              x="122.55859"
-             id="use126" />
+             id="use125" />
           <use
              xlink:href="#LinBiolinum-6e"
              x="148.53516"
-             id="use127" />
+             id="use126" />
           <use
              xlink:href="#LinBiolinum-61"
              x="202.39258"
+             id="use127" />
+        </g>
+      </g>
+      <g
+         id="PathCollection_41">
+        <g
+           id="g128">
+          <use
+             xlink:href="#m67f682372f"
+             x="199.12"
+             y="81.928749"
+             style="stroke:#000000;stroke-width:0.4"
              id="use128" />
         </g>
       </g>
       <g
-         id="PathCollection_42">
-        <g
-           id="g129">
-          <use
-             xlink:href="#mbe4d6b1508"
-             x="199.12"
-             y="76.189377"
-             style="stroke:#000000;stroke-width:0.4"
-             id="use129" />
-        </g>
-      </g>
-      <g
          id="text_13">
-        <!-- modern GPU (2025) -->
+        <!-- $3,000 GPU (2025) -->
         <g
-           transform="matrix(0.08,0,0,-0.08,210.32,78.289375)"
-           id="g146">
+           transform="matrix(0.08,0,0,-0.08,210.32,84.02875)"
+           id="g145">
           <defs
-             id="defs129">
+             id="defs128">
             <path
-               id="LinBiolinum-6d"
-               d="m 1038,2253 18,-19 q 544,575 1075,575 269,0 452,-138 183,-137 226,-368 482,506 1082,506 475,0 634,-259 159,-259 159,-759 v -638 q 0,-744 60,-1153 l -16,-19 Q 4613,0 4428,0 4244,0 4128,-19 l -12,19 q 56,391 56,1153 v 703 q 0,313 -122,441 -122,128 -391,128 -468,0 -812,-384 6,-78 6,-244 v -644 q 0,-744 60,-1153 l -13,-19 Q 2784,0 2598,0 2413,0 2297,-19 l -13,19 q 57,391 60,1153 v 703 q 0,569 -425,569 -172,0 -416,-138 -244,-137 -465,-362 v -772 q 0,-744 56,-1153 l -13,-19 Q 966,0 780,0 594,0 481,-19 L 469,0 q 56,391 56,1153 v 350 q 0,885 -56,1244 l 12,19 q 282,-25 516,18 37,0 41,-65 z"
+               id="LinBiolinum-24"
+               d="m 1369,2338 75,1321 h -10 q -287,0 -461,-175 -173,-175 -173,-450 0,-175 94,-320 94,-145 208,-225 114,-80 267,-151 z m 200,-647 -81,-1488 q 300,25 503,203 203,178 203,491 0,178 -47,311 -47,133 -144,222 -97,89 -192,145 -95,56 -242,116 z m -97,-1750 -28,-538 q -56,-31 -238,-31 l 32,565 Q 947,-50 708,20 469,91 372,147 q -97,56 -97,66 l -12,18 q 96,397 121,582 l 57,6 q 31,-69 73,-133 42,-64 92,-121 50,-56 105,-106 55,-50 117,-91 63,-40 131,-71 69,-31 142,-55 74,-23 152,-33 l 85,1572 q -210,88 -363,178 -153,91 -303,222 -150,132 -228,308 -78,177 -78,392 0,178 64,339 64,161 171,281 108,121 249,210 141,89 297,137 156,49 309,55 l 28,510 q 85,31 238,31 l -31,-547 q 253,-19 445,-85 192,-65 255,-121 l 65,-57 16,-18 q -91,-275 -116,-563 l -65,-6 q -103,228 -255,378 -152,150 -361,206 l -75,-1387 q 144,-53 256,-100 113,-47 249,-121 136,-73 234,-161 99,-87 184,-197 86,-109 131,-251 46,-142 46,-308 0,-518 -384,-843 Q 2153,125 1931,42 1709,-41 1472,-59 Z"
                transform="scale(0.015625)" />
             <path
-               id="LinBiolinum-72"
-               d="m 1069,2138 19,-13 q 225,384 393,534 169,150 419,150 78,0 231,-43 l 25,-25 -128,-475 -50,-13 q -97,91 -334,91 -213,0 -356,-225 -219,-331 -219,-635 v -331 q 0,-715 56,-1153 l -12,-19 Q 997,0 812,0 628,0 513,-19 L 500,0 q 56,397 56,1153 v 350 q 0,885 -56,1244 l 13,19 q 281,-25 518,18 38,0 38,-65 z"
+               id="LinBiolinum-33"
+               d="m 1338,184 q 109,0 234,39 125,40 268,129 144,89 239,284 96,195 96,464 0,403 -250,616 -250,206 -625,203 -191,0 -269,-13 v 282 q 135,-19 238,-19 347,0 528,181 244,231 244,625 0,294 -166,486 -166,192 -366,192 -281,0 -450,-131 -168,-131 -290,-413 l -97,7 -134,409 18,22 q 410,359 1013,356 469,0 748,-239 280,-239 280,-592 0,-372 -236,-644 -236,-272 -517,-334 v -35 q 378,-31 629,-284 252,-253 252,-622 0,-397 -242,-686 Q 2241,178 1933,57 1625,-63 1325,-63 738,-63 372,244 l -19,19 141,481 94,6 q 90,-184 126,-253 36,-69 122,-161 86,-92 201,-122 116,-30 301,-30 z"
+               transform="scale(0.015625)" />
+            <path
+               id="LinBiolinum-2c"
+               d="m 306,281 v 25 q 85,238 347,347 h 25 q 410,-147 410,-672 0,-184 -49,-326 -48,-143 -162,-253 -114,-111 -194,-163 -80,-52 -261,-161 -84,72 -81,134 500,341 497,604 0,165 -185,165 -159,38 -234,92 -75,55 -113,208 z"
                transform="scale(0.015625)" />
             <path
                id="LinBiolinum-47"
@@ -972,126 +961,72 @@
                transform="scale(0.015625)" />
           </defs>
           <use
-             xlink:href="#LinBiolinum-6d"
+             xlink:href="#LinBiolinum-24"
+             id="use129" />
+          <use
+             xlink:href="#LinBiolinum-33"
+             x="46.484375"
              id="use130" />
           <use
-             xlink:href="#LinBiolinum-6f"
-             x="80.664062"
+             xlink:href="#LinBiolinum-2c"
+             x="92.96875"
              id="use131" />
           <use
-             xlink:href="#LinBiolinum-64"
-             x="130.66406"
+             xlink:href="#LinBiolinum-30"
+             x="114.94141"
              id="use132" />
           <use
-             xlink:href="#LinBiolinum-65"
-             x="183.64258"
+             xlink:href="#LinBiolinum-30"
+             x="161.42578"
              id="use133" />
           <use
-             xlink:href="#LinBiolinum-72"
-             x="228.90625"
+             xlink:href="#LinBiolinum-30"
+             x="207.91016"
              id="use134" />
           <use
-             xlink:href="#LinBiolinum-6e"
-             x="264.4043"
+             xlink:href="#LinBiolinum-20"
+             x="254.39453"
              id="use135" />
           <use
-             xlink:href="#LinBiolinum-20"
-             x="318.26172"
+             xlink:href="#LinBiolinum-47"
+             x="279.39453"
              id="use136" />
           <use
-             xlink:href="#LinBiolinum-47"
-             x="343.26172"
+             xlink:href="#LinBiolinum-50"
+             x="351.07422"
              id="use137" />
           <use
-             xlink:href="#LinBiolinum-50"
-             x="414.94141"
+             xlink:href="#LinBiolinum-55"
+             x="406.93359"
              id="use138" />
           <use
-             xlink:href="#LinBiolinum-55"
-             x="470.80078"
+             xlink:href="#LinBiolinum-20"
+             x="476.12305"
              id="use139" />
           <use
-             xlink:href="#LinBiolinum-20"
-             x="539.99023"
+             xlink:href="#LinBiolinum-28"
+             x="501.12305"
              id="use140" />
           <use
-             xlink:href="#LinBiolinum-28"
-             x="564.99023"
+             xlink:href="#LinBiolinum-32"
+             x="531.10352"
              id="use141" />
           <use
-             xlink:href="#LinBiolinum-32"
-             x="594.9707"
+             xlink:href="#LinBiolinum-30"
+             x="575.48828"
              id="use142" />
           <use
-             xlink:href="#LinBiolinum-30"
-             x="639.35547"
+             xlink:href="#LinBiolinum-32"
+             x="621.97266"
              id="use143" />
           <use
-             xlink:href="#LinBiolinum-32"
-             x="685.83984"
+             xlink:href="#LinBiolinum-35"
+             x="666.35742"
              id="use144" />
           <use
-             xlink:href="#LinBiolinum-35"
-             x="730.22461"
-             id="use145" />
-          <use
              xlink:href="#LinBiolinum-29"
-             x="776.70898"
-             id="use146" />
-        </g>
-      </g>
-      <g
-         id="PathCollection_43">
-        <g
-           id="g147">
-          <use
-             xlink:href="#m3112429c7a"
-             x="199.12"
-             y="87.668121"
-             style="fill:#e2b63b;stroke:#000000;stroke-width:0.4"
-             id="use147" />
-        </g>
-      </g>
-      <g
-         id="text_14">
-        <!-- Europe -->
-        <g
-           transform="matrix(0.08,0,0,-0.08,210.32,89.768125)"
-           id="g153">
-          <defs
-             id="defs147">
-            <path
-               id="LinBiolinum-45"
-               d="m 1216,1281 q 0,-750 53,-922 384,0 834,19 450,19 710,38 l 259,18 12,-25 q -12,-103 -12,-212 0,-19 12,-197 l -12,-19 Q 2919,0 2688,0 H 941 L 609,-19 603,0 q 63,434 63,1281 v 1566 q 0,825 -63,1281 l 13,19 q 109,-19 325,-19 h 1684 q 231,0 384,19 l 13,-19 q -13,-178 -13,-242 0,-64 13,-167 l -13,-25 q -884,78 -1740,75 -50,-172 -53,-922 v -497 q 672,0 1428,63 l 19,-19 q -19,-91 -19,-205 0,-114 19,-205 l -19,-18 q -635,62 -1428,62 z"
-               transform="scale(0.015625)" />
-            <path
-               id="LinBiolinum-75"
-               d="M 2338,588 Q 2159,313 1901,125 1644,-63 1369,-63 928,-63 729,192 531,447 531,825 v 769 q 0,744 -56,1153 l 13,19 q 115,-19 299,-19 185,0 301,19 l 12,-19 q -56,-384 -56,-1153 V 959 q 0,-403 112,-534 113,-131 316,-131 225,0 470,201 246,202 408,471 v 628 q 0,728 -59,1153 l 12,19 q 116,-19 302,-19 186,0 301,19 l 13,-19 q -56,-384 -60,-1153 V 1228 Q 2859,581 2969,0 l -13,-19 q -128,19 -284,19 -75,0 -222,-19 -56,0 -56,19 l -31,569 z"
-               transform="scale(0.015625)" />
-          </defs>
-          <use
-             xlink:href="#LinBiolinum-45"
-             id="use148" />
-          <use
-             xlink:href="#LinBiolinum-75"
-             x="53.759766"
-             id="use149" />
-          <use
-             xlink:href="#LinBiolinum-72"
-             x="107.42188"
-             id="use150" />
-          <use
-             xlink:href="#LinBiolinum-6f"
-             x="142.91992"
-             id="use151" />
-          <use
-             xlink:href="#LinBiolinum-70"
-             x="192.91992"
-             id="use152" />
-          <use
-             xlink:href="#LinBiolinum-65"
-             x="245.21484"
-             id="use153" />
+             x="712.8418"
+             id="use145" />
         </g>
       </g>
     </g>
@@ -1105,15 +1040,15 @@
       <defs
          id="defs61">
         <path
-           id="m20c503180f"
+           id="mf2b39f9658"
            d="M 0,2.5 C 0.663008,2.5 1.29895,2.236584 1.767767,1.767767 2.236584,1.29895 2.5,0.663008 2.5,0 2.5,-0.663008 2.236584,-1.29895 1.767767,-1.767767 1.29895,-2.236584 0.663008,-2.5 0,-2.5 c -0.663008,0 -1.29895,0.263416 -1.767767,0.732233 C -2.236584,-1.29895 -2.5,-0.663008 -2.5,0 c 0,0.663008 0.263416,1.29895 0.732233,1.767767 C -1.29895,2.236584 -0.663008,2.5 0,2.5 Z"
            style="stroke:#000000;stroke-width:0.4" />
       </defs>
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g62">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="37.981819"
            y="117.45"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1125,15 +1060,15 @@
       <defs
          id="defs62">
         <path
-           id="m550516105d"
+           id="m9d5bc08a16"
            d="M 0,2.5 C 0.663008,2.5 1.29895,2.236584 1.767767,1.767767 2.236584,1.29895 2.5,0.663008 2.5,0 2.5,-0.663008 2.236584,-1.29895 1.767767,-1.767767 1.29895,-2.236584 0.663008,-2.5 0,-2.5 c -0.663008,0 -1.29895,0.263416 -1.767767,0.732233 C -2.236584,-1.29895 -2.5,-0.663008 -2.5,0 c 0,0.663008 0.263416,1.29895 0.732233,1.767767 C -1.29895,2.236584 -0.663008,2.5 0,2.5 Z"
            style="stroke:#000000;stroke-width:0.4" />
       </defs>
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g63">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="39.860607"
            y="112.88734"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1143,10 +1078,10 @@
     <g
        id="PathCollection_3">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g64">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="42.49091"
            y="111.98"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1156,10 +1091,10 @@
     <g
        id="PathCollection_4">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g65">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="44.369698"
            y="110.91785"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1169,10 +1104,10 @@
     <g
        id="PathCollection_5">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g66">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="51.50909"
            y="109.29711"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1182,10 +1117,10 @@
     <g
        id="PathCollection_6">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g67">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="53.387878"
            y="106.09377"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1195,10 +1130,10 @@
     <g
        id="PathCollection_7">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g68">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="56.018181"
            y="99.446449"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1208,10 +1143,10 @@
     <g
        id="PathCollection_8">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g69">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="57.896969"
            y="98.039551"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1221,10 +1156,10 @@
     <g
        id="PathCollection_9">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g70">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="65.036362"
            y="95.163734"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1234,10 +1169,10 @@
     <g
        id="PathCollection_10">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g71">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="66.915154"
            y="94.447189"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1247,10 +1182,10 @@
     <g
        id="PathCollection_11">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g72">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="71.42424"
            y="89.888702"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1260,10 +1195,10 @@
     <g
        id="PathCollection_12">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g73">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="74.054543"
            y="87.512177"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1273,10 +1208,10 @@
     <g
        id="PathCollection_13">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g74">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="78.563637"
            y="77.512711"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1286,10 +1221,10 @@
     <g
        id="PathCollection_14">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g75">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="89.460609"
            y="73.273659"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1299,10 +1234,10 @@
     <g
        id="PathCollection_15">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g76">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="92.090912"
            y="69.155174"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1312,10 +1247,10 @@
     <g
        id="PathCollection_16">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g77">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="93.969696"
            y="64.670776"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1325,10 +1260,10 @@
     <g
        id="PathCollection_17">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g78">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="102.98788"
            y="61.343117"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1338,10 +1273,10 @@
     <g
        id="PathCollection_18">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g79">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="105.61818"
            y="56.57793"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1351,10 +1286,10 @@
     <g
        id="PathCollection_19">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g80">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="107.49697"
            y="56.114906"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1364,10 +1299,10 @@
     <g
        id="PathCollection_20">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g81">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="112.00606"
            y="53.212952"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1379,15 +1314,15 @@
       <defs
          id="defs81">
         <path
-           id="m0a2ec7986c"
+           id="m32fde195a2"
            d="M 0,2.5 C 0.663008,2.5 1.29895,2.236584 1.767767,1.767767 2.236584,1.29895 2.5,0.663008 2.5,0 2.5,-0.663008 2.236584,-1.29895 1.767767,-1.767767 1.29895,-2.236584 0.663008,-2.5 0,-2.5 c -0.663008,0 -1.29895,0.263416 -1.767767,0.732233 C -2.236584,-1.29895 -2.5,-0.663008 -2.5,0 c 0,0.663008 0.263416,1.29895 0.732233,1.767767 C -1.29895,2.236584 -0.663008,2.5 0,2.5 Z"
            style="stroke:#000000;stroke-width:0.4" />
       </defs>
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g82">
         <use
-           xlink:href="#m0a2ec7986c"
+           xlink:href="#m32fde195a2"
            x="116.51515"
            y="50.855911"
            style="fill:#d7553b;stroke:#000000;stroke-width:0.4"
@@ -1397,10 +1332,10 @@
     <g
        id="PathCollection_22">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g83">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="119.14545"
            y="43.632915"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1410,10 +1345,10 @@
     <g
        id="PathCollection_23">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g84">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="121.02424"
            y="42.054672"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1423,10 +1358,10 @@
     <g
        id="PathCollection_24">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g85">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="123.65455"
            y="39.305927"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1436,10 +1371,10 @@
     <g
        id="PathCollection_25">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g86">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="125.53333"
            y="38.839966"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1449,10 +1384,10 @@
     <g
        id="PathCollection_26">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g87">
         <use
-           xlink:href="#m0a2ec7986c"
+           xlink:href="#m32fde195a2"
            x="128.16364"
            y="34.751492"
            style="fill:#d7553b;stroke:#000000;stroke-width:0.4"
@@ -1462,10 +1397,10 @@
     <g
        id="PathCollection_27">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g88">
         <use
-           xlink:href="#m0a2ec7986c"
+           xlink:href="#m32fde195a2"
            x="141.6909"
            y="28.444201"
            style="fill:#d7553b;stroke:#000000;stroke-width:0.4"
@@ -1475,10 +1410,10 @@
     <g
        id="PathCollection_28">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g89">
         <use
-           xlink:href="#m0a2ec7986c"
+           xlink:href="#m32fde195a2"
            x="146.2"
            y="28.444201"
            style="fill:#d7553b;stroke:#000000;stroke-width:0.4"
@@ -1488,10 +1423,10 @@
     <g
        id="PathCollection_29">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g90">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="150.70909"
            y="26.735607"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1501,10 +1436,10 @@
     <g
        id="PathCollection_30">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g91">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="152.58788"
            y="25.737757"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1514,10 +1449,10 @@
     <g
        id="PathCollection_31">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g92">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="155.21819"
            y="25.519764"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1527,10 +1462,10 @@
     <g
        id="PathCollection_32">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g93">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="159.72728"
            y="19.101025"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1540,10 +1475,10 @@
     <g
        id="PathCollection_33">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g94">
         <use
-           xlink:href="#m550516105d"
+           xlink:href="#m9d5bc08a16"
            x="161.60606"
            y="18.715403"
            style="fill:#3bd767;stroke:#000000;stroke-width:0.4"
@@ -1553,10 +1488,10 @@
     <g
        id="PathCollection_34">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g95">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="168.74545"
            y="13.012928"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1566,10 +1501,10 @@
     <g
        id="PathCollection_35">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g96">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="173.25455"
            y="12.512422"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1579,10 +1514,10 @@
     <g
        id="PathCollection_36">
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g97">
         <use
-           xlink:href="#m20c503180f"
+           xlink:href="#mf2b39f9658"
            x="177.76364"
            y="12.45"
            style="fill:#3b94d7;stroke:#000000;stroke-width:0.4"
@@ -1594,17 +1529,17 @@
       <defs
          id="defs97">
         <path
-           id="mbe4d6b1508"
+           id="m67f682372f"
            d="M 0,2.5 C 0.663008,2.5 1.29895,2.236584 1.767767,1.767767 2.236584,1.29895 2.5,0.663008 2.5,0 2.5,-0.663008 2.236584,-1.29895 1.767767,-1.767767 1.29895,-2.236584 0.663008,-2.5 0,-2.5 c -0.663008,0 -1.29895,0.263416 -1.767767,0.732233 C -2.236584,-1.29895 -2.5,-0.663008 -2.5,0 c 0,0.663008 0.263416,1.29895 0.732233,1.767767 C -1.29895,2.236584 -0.663008,2.5 0,2.5 Z"
            style="stroke:#000000;stroke-width:0.4" />
       </defs>
       <g
-         clip-path="url(#pf52ba5ed8a)"
+         clip-path="url(#pcbbf7e3708)"
          id="g98">
         <use
-           xlink:href="#mbe4d6b1508"
+           xlink:href="#m67f682372f"
            x="180.01819"
-           y="85.484116"
+           y="71.111137"
            style="stroke:#000000;stroke-width:0.4"
            id="use98" />
       </g>

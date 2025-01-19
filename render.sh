@@ -4,7 +4,7 @@
 set -e
 
 # slides="Title Particles PeriodicTable Masses Dynamics OverviewPhysics TimeEvolution TimeScales Overview HydrogenRevisited Priors Dimensionality Images GNN"
-slides="HPC LUMI"
+slides="OnlineLearning"
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 manim render --fps 30 -r "1280,720" scene.py $slides
