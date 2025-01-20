@@ -2618,11 +2618,11 @@ class ThreeReview(Slide):  # 24
         self.next_slide()
 
 
-class Movie(Slide):
+class Movie(Slide):  # 25
 
     def construct(self):
         self.wait_time_between_slides = 0.05
-        # self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        self.add(Text("25", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
         self.add(Text("movie isobutene", color=BLACK, z_index=0))
@@ -2630,11 +2630,11 @@ class Movie(Slide):
         self.next_slide()
 
 
-class Features(Slide):
+class Features(Slide):  # 26
 
     def construct(self):
         self.wait_time_between_slides = 0.05
-        # self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        self.add(Text("26", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
 
@@ -2652,11 +2652,11 @@ class Features(Slide):
             self.next_slide()
 
 
-class DeltaLearning(Slide):  # 26
+class DeltaLearning(Slide):  # 27
 
     def construct(self):
         self.wait_time_between_slides = 0.05
-        self.add(Text("26", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        self.add(Text("27", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         title = Text(
             "good = bad + (good - bad)",
@@ -2734,11 +2734,11 @@ class DeltaLearning(Slide):  # 26
         self.next_slide()
 
 
-class DeltaLearningFigure(Slide):  # 27
+class DeltaLearningFigure(Slide):  # 28
 
     def construct(self):
         self.wait_time_between_slides = 0.05
-        self.add(Text("27", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
 
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
@@ -2751,15 +2751,15 @@ class DeltaLearningFigure(Slide):  # 27
             self.next_slide()
 
 
-class IsobuteneProfile(Slide):  # 28
+class IsobuteneProfile(Slide):  # 29
 
     def construct(self):
         self.wait_time_between_slides = 0.05
-        self.add(Text("28", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        self.add(Text("29", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
 
-        reaction = ImageMobject('images/proton_transfer.png').scale(0.7).to_edge(LEFT)
+        reaction = ImageMobject('images/zeo_isobutene_cation.png').scale(0.55).to_edge(LEFT)
         self.add(reaction)
         self.play(Wait())
         self.next_slide()
@@ -2769,3 +2769,303 @@ class IsobuteneProfile(Slide):  # 28
         self.add(profile)
         self.play(Wait())
         self.next_slide()
+
+
+class ThreeFinal(Slide):  # 30
+
+    def gnn(self):
+        message_passing = Text(
+            "message passing:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1)
+        from_xyz = Tex(r"$\text{\sffamily XYZ} \longrightarrow \quad$").next_to(message_passing, RIGHT)
+        squares = []
+        for color in MESSAGE_COLORS:
+            square = Square(
+                0.3,
+                stroke_color=WHITE,
+                fill_color=color,
+                fill_opacity=1.0,
+                stroke_width=1.5,
+            )
+            squares.append(square)
+        feats = VGroup(*squares[::-1]).arrange(DOWN, buff=0).next_to(from_xyz, RIGHT)
+
+        readout = Text(
+            "readout:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).next_to(message_passing, 3 * DOWN, aligned_edge=LEFT)
+        f_read = Tex(r"$f_{\text{\sffamily read}}(\quad) = E_i$").next_to(readout, 2 * RIGHT)
+        arg = feats.copy().move_to(f_read.get_center() + 0.14 * LEFT)
+
+        content = VGroup(message_passing, from_xyz, feats, readout, f_read, arg)
+        border = SurroundingRectangle(content, color=WHITE, buff=0.2)
+        title = Text(
+            "GNN",
+            font='Open Sans',
+            font_size=250,
+            weight="BOLD",
+        ).scale(0.1).next_to(border, 0.5 * UP, aligned_edge=LEFT)
+        return content, border, title
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("30", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        title = Text(
+            "so... the phd itself?",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        content, border, title = self.gnn()
+        gnn = VGroup(content, border, title).center()
+        self.add(content, gnn)
+
+        numbers = []
+        for i in range(3):
+            circle = Circle(
+                radius=0.25,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+                stroke_color=WHITE,
+                z_index=0,
+            )
+            number = Text(
+                str(i + 1),
+                font="Open Sans",
+                font_size=250,
+                color=BLACK,
+                z_index=1,
+                weight="BOLD",
+            ).scale(0.1)
+            number.move_to(circle.get_center())
+            if i == 0:
+                number.shift(0.02 * LEFT)
+            numbers.append(VGroup(number, circle))
+        gnumbers = VGroup(*numbers).arrange(DOWN, buff=1.5).shift(6.5 * LEFT + 0.5 * DOWN)
+        gnn.scale(0.7).to_corner(UR)
+        self.add(*[e for n in numbers for e in n])
+
+        training = r"$\text{\sffamily GNN} \longleftarrow"
+        training += r"\left\{\text{\sffamily XYZ}, E, \vec{F}\right\}$"
+        training = Tex(training, tex_template=tex_template).next_to(numbers[0], RIGHT)
+        self.add(training.scale(0.9))
+        catch = Text(
+            "on-the-fly learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(training, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(catch)
+
+        no_F = Text(
+            "most accurate QM methods can only do ",
+            color=WHITE,
+            font='Open Sans',
+            font_size=200,
+        ).scale(0.1 * 3 / 2).next_to(numbers[1], 2 * RIGHT)
+        F = Tex(r"$\left\{\text{\sffamily XYZ}, E\right\}$", tex_template=tex_template).next_to(
+            no_F,
+            RIGHT,
+        ).shift(0.0 * UP)
+        transfer = Text(
+            "transfer learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(no_F, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(no_F)
+        self.add(F)
+        self.add(transfer)
+
+        texts = ['computational cost = ', '# steps ', ' x  (cost/step)']
+        mtexts = []
+        for text in texts:
+            mtext = Text(
+                text,
+                font='Open Sans',
+                font_size=200,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+            ).scale(0.1 * 3 / 2)
+            mtexts.append(mtext)
+        VGroup(*mtexts).arrange(RIGHT, buff=0.2).next_to(numbers[2], 2 * RIGHT)
+        self.add(*mtexts)
+
+        to_gray = VGroup(mtexts[0], mtexts[2])
+        to_gray.set_color(DARK_GRAY)
+        feats = content[2].copy().set_y(no_F.get_y())
+        feats_ = content[2].copy().set_y(mtexts[0].get_y())
+        self.add(feats)
+        self.add(feats_)
+
+        self.play(Wait())
+        self.next_slide()
+
+        sbc = Text(
+            "classification (A|B)",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(mtexts[0], 0.5 * DOWN, aligned_edge=LEFT)
+        target = Text(
+            "targeted simulation: A to B",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(sbc, RIGHT, buff=1)
+        self.play(AddTextLetterByLetter(sbc), run_time=0.5)
+        self.play(AddTextLetterByLetter(target), run_time=0.5)
+        self.next_slide()
+
+
+class IsobuteneBasins(Slide):  # 31
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("31", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        reaction = ImageMobject('images/zeo_isobutene_cation.png').scale(0.55).to_edge(LEFT)
+        self.add(reaction)
+        self.play(Wait())
+        self.next_slide()
+
+        for i in range(3):
+            path = f'images/coordination_labeled_Layer_{i + 1}.png'
+            image = ImageMobject(path).scale(0.65).to_edge(RIGHT, buff=0.1)
+            self.add(image)
+            self.play(Wait())
+            self.next_slide()
+
+
+class ManualLikelihood(Slide):  # 32
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("32", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        title = Text(
+            "previously: based on human intuition",
+            font='Open Sans',
+            color=BLACK,
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+        self.play(Wait())
+        self.next_slide()
+
+        image = ImageMobject('images/likelihood_manual.png').scale(0.8).shift(0.5 * DOWN)
+        self.add(image)
+        self.play(Wait())
+        self.next_slide()
+
+
+class PhaseLearningFigure(Slide):  # 33
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("33", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        title = Text(
+            "train 'likelihood' functions!",
+            font='Open Sans',
+            color=BLACK,
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+        self.play(Wait())
+        self.next_slide()
+
+        for i in range(4):
+            path = f'images/logits_Layer_{i + 1}.png'
+            image = ImageMobject(path).scale(0.6)
+            self.add(image)
+            self.play(Wait())
+            self.next_slide()
+
+        # preprint = Text(
+        #     "arXiv:2404.03777 (April 2024)"
+        # )
+
+
+class LearnedLikelihood(Slide):  # 34
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("34", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+        title = Text(
+            "consider difference in (log) likelihood!",
+            font='Open Sans',
+            color=BLACK,
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        image = ImageMobject('images/likelihood_learned.png').scale(0.7).shift(0.5 * DOWN)
+        self.add(image)
+        self.play(Wait())
+        self.next_slide()
+
+        self.play(image.animate.scale(0.7).to_edge(LEFT, buff=0.1), run_time=0.4)
+        manual = ImageMobject('images/likelihood_manual.png').scale(0.49)
+        manual.set_y(image.get_y()).to_edge(RIGHT, buff=0.1)
+        self.play(FadeIn(manual), run_time=0.2)
+        self.next_slide()
+
+
+class MIL53(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("34", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+        title = Text(
+            "not limited to chemical reactions!",
+            font='Open Sans',
+            color=BLACK,
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        mil = ImageMobject('images/mil53.png').scale(0.4).to_edge(LEFT, buff=0.1)
+        self.add(mil)
+        self.play(Wait())
+        self.next_slide()
+
+        scatter = ImageMobject('images/mil53_scatter.png').scale(0.5)
+        scatter.to_edge(RIGHT, buff=0.1).set_y(mil.get_y())
+        self.add(scatter)
+        self.play(Wait())
+        self.next_slide()
+
+
+class Learning(Slide):  # 35
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("35", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        for i in range(5):
+            path = f'images/learning_{i + 1}.png'
+            image = ImageMobject(path).scale(0.6)
+            self.add(image)
+            self.play(Wait())
+            self.next_slide()
