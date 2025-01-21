@@ -2,6 +2,9 @@ media/
 slides/
 videos/
 scene_assets/
+images/movie/*.jpg
+__pycache__/
 *.html
 *.log
 *.pptx
+.DS_Store

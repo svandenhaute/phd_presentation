@@ -41,6 +41,9 @@ slides=(
     MIL53
     Learning
 )
+slides=(
+    Movie
+)
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 

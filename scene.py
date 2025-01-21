@@ -1,3 +1,4 @@
+import glob
 from functools import partial
 
 import numpy as np
@@ -2625,8 +2626,23 @@ class Movie(Slide):  # 25
         self.add(Text("25", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
         background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
         self.add(background)
-        self.add(Text("movie isobutene", color=BLACK, z_index=0))
         self.play(Wait())
+        self.next_slide()
+
+        files = sorted(list(glob.glob('images/movie/frame_*.jpg')))
+        block = 30
+        for block_index in range(len(files) // block + 1):
+            start = block_index * block
+            stop = min((block_index + 1) * block, len(files))
+            print(files[start:stop])
+            images = [ImageMobject(file).scale(0.9) for file in files[start:stop]]
+            anims = []
+            for image in images:
+                anims.append(FadeIn(image, run_time=0.001))
+                anims.append(Wait(1 / 30))
+            self.play(Succession(*anims), run_time=block / 20)  # somehow breaks at 30?
+            for image in images[:-1]:  # keep last image to not have flashing white screen
+                self.remove(image)
         self.next_slide()
 
 
