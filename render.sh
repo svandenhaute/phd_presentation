@@ -40,18 +40,18 @@ slides=(
     LearnedLikelihood
     MIL53
     Learning
+    Performance
+    ThreeFinal
+    Acknowledgements
 )
-slides=(
-    Movie
-)
-
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
 # Loop through array elements
 for slide in "${slides[@]}"; do
     echo "Rendering slide: $slide"
-    manim render --fps 30 -r "1280,720" scene.py "$slide"
+    # manim render --fps 60 -r "1920,1080" scene.py "$slide"
 done
 
 # Pass array elements directly as arguments
-manim-slides present --hide-mouse --hide-info-window "${slides[@]}"
+manim-slides convert --to=HTML "${slides[@]}" scene.html
+# manim-slides present --hide-mouse --hide-info-window "${slides[@]}"

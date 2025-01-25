@@ -534,7 +534,7 @@ class Masses(Slide):  # 3
         raw_str = r"$$\vec{F} = m \vec{a}$$"
         classical_tex = Tex(raw_str, tex_template=tex_template).move_to(electrostatics.get_center()).set_color(WHITE)
         classical_tex.move_to(qm_tex.get_center() + 3 * DOWN)
-        classical_tex[0][0].set_color(color=QM_COLOR)
+        classical_tex[0][:2].set_color(color=QM_COLOR)
         self.play(ReplacementTransform(electrons_lines, hatch))
         self.play(Write(classical_tex), run_time=0.7)
         # self.play(Circumscribe(classical_tex[0][:2], color=QM_COLOR))
@@ -1025,6 +1025,16 @@ class TimeScales(Slide):  # 7
             fill_opacity=1.0,
         ).scale(0.2).next_to(evals, DOWN, aligned_edge=LEFT)
         self.play(AddTextLetterByLetter(time), run_time=0.5)
+        self.next_slide()
+
+
+class Pareto(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        image = ImageMobject('test.png')
+        self.add(image)
+        self.play(Wait())
         self.next_slide()
 
 
@@ -3085,3 +3095,231 @@ class Learning(Slide):  # 35
             self.add(image)
             self.play(Wait())
             self.next_slide()
+
+
+class Performance(Slide):  # 36
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("36", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+
+        items = [
+            'additional computational cost ~ 0',
+            '"end-to-end" from XYZ',
+            'respects physical symmetries (!)',
+            'reactive/solid-state/conformational',
+            'data-efficient (exploits learned features)',
+        ]
+        texts = []
+        for item in items:
+            text = Text(
+                item,
+                font='Open Sans',
+                font_size=200,
+                color=NUCLEUS_COLOR,
+            ).scale(0.1 * 3 / 2)
+            texts.append(text)
+
+        texts = VGroup(*texts).arrange(DOWN, buff=0.4, aligned_edge=LEFT).to_edge(
+            LEFT,
+            buff=0.5,
+        )
+        self.play(FadeIn(texts), run_time=0.5)
+        self.next_slide()
+
+        image = ImageMobject('images/table.png').scale(0.5).to_edge(RIGHT, buff=0.1)
+        self.play(FadeIn(image), run_time=0.5)
+        self.next_slide()
+
+
+class ThreeFinal(Slide):  # 37
+
+    def gnn(self):
+        message_passing = Text(
+            "message passing:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1)
+        from_xyz = Tex(r"$\text{\sffamily XYZ} \longrightarrow \quad$").next_to(message_passing, RIGHT)
+        squares = []
+        for color in MESSAGE_COLORS:
+            square = Square(
+                0.3,
+                stroke_color=WHITE,
+                fill_color=color,
+                fill_opacity=1.0,
+                stroke_width=1.5,
+            )
+            squares.append(square)
+        feats = VGroup(*squares[::-1]).arrange(DOWN, buff=0).next_to(from_xyz, RIGHT)
+
+        readout = Text(
+            "readout:",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.1).next_to(message_passing, 3 * DOWN, aligned_edge=LEFT)
+        f_read = Tex(r"$f_{\text{\sffamily read}}(\quad) = E_i$").next_to(readout, 2 * RIGHT)
+        arg = feats.copy().move_to(f_read.get_center() + 0.14 * LEFT)
+
+        content = VGroup(message_passing, from_xyz, feats, readout, f_read, arg)
+        border = SurroundingRectangle(content, color=WHITE, buff=0.2)
+        title = Text(
+            "GNN",
+            font='Open Sans',
+            font_size=250,
+            weight="BOLD",
+        ).scale(0.1).next_to(border, 0.5 * UP, aligned_edge=LEFT)
+        return content, border, title
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("38", font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+        title = Text(
+            "so... the phd itself?",
+            font='Open Sans',
+            font_size=250,
+        ).scale(0.13).to_corner(UL)
+        self.add(title)
+
+        content, border, title = self.gnn()
+        gnn = VGroup(content, border, title).center()
+        self.add(content, gnn)
+
+        numbers = []
+        for i in range(3):
+            circle = Circle(
+                radius=0.25,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+                stroke_color=WHITE,
+                z_index=0,
+            )
+            number = Text(
+                str(i + 1),
+                font="Open Sans",
+                font_size=250,
+                color=BLACK,
+                z_index=1,
+                weight="BOLD",
+            ).scale(0.1)
+            number.move_to(circle.get_center())
+            if i == 0:
+                number.shift(0.02 * LEFT)
+            numbers.append(VGroup(number, circle))
+        gnumbers = VGroup(*numbers).arrange(DOWN, buff=1.5).shift(6.5 * LEFT + 0.5 * DOWN)
+        gnn.scale(0.7).to_corner(UR)
+        self.add(*[e for n in numbers for e in n])
+
+        training = r"$\text{\sffamily GNN} \longleftarrow"
+        training += r"\left\{\text{\sffamily XYZ}, E, \vec{F}\right\}$"
+        training = Tex(training, tex_template=tex_template).next_to(numbers[0], RIGHT)
+        self.add(training.scale(0.9))
+        catch = Text(
+            "on-the-fly learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(training, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(catch)
+
+        no_F = Text(
+            "most accurate QM methods can only do ",
+            color=WHITE,
+            font='Open Sans',
+            font_size=200,
+        ).scale(0.1 * 3 / 2).next_to(numbers[1], 2 * RIGHT)
+        F = Tex(r"$\left\{\text{\sffamily XYZ}, E\right\}$", tex_template=tex_template).next_to(
+            no_F,
+            RIGHT,
+        ).shift(0.0 * UP)
+        transfer = Text(
+            "transfer learning!",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(no_F, 0.5 * DOWN, aligned_edge=LEFT)
+        self.add(no_F)
+        self.add(F)
+        self.add(transfer)
+
+        texts = ['computational cost = ', '# steps ', ' x  (cost/step)']
+        mtexts = []
+        for text in texts:
+            mtext = Text(
+                text,
+                font='Open Sans',
+                font_size=200,
+                fill_color=WHITE,
+                fill_opacity=1.0,
+            ).scale(0.1 * 3 / 2)
+            mtexts.append(mtext)
+        VGroup(*mtexts).arrange(RIGHT, buff=0.2).next_to(numbers[2], 2 * RIGHT)
+        self.add(*mtexts)
+
+        to_gray = VGroup(mtexts[0], mtexts[2])
+        to_gray.set_color(DARK_GRAY)
+        feats = content[2].copy().set_y(no_F.get_y())
+        feats_ = content[2].copy().set_y(mtexts[0].get_y())
+        self.add(feats)
+        self.add(feats_)
+
+        sbc = Text(
+            "classification (A|B)",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(mtexts[0], 0.5 * DOWN, aligned_edge=LEFT)
+        target = Text(
+            "targeted simulation: A to B",
+            color=ELECTRON_COLOR,
+            font='Open Sans',
+            font_size=300,
+        ).scale(0.1).next_to(sbc, RIGHT, buff=1)
+        self.play(AddTextLetterByLetter(sbc), run_time=0.5)
+        self.play(AddTextLetterByLetter(target), run_time=0.5)
+        self.play(Wait())
+        self.next_slide()
+
+
+class Acknowledgements(Slide):
+
+    def construct(self):
+        self.wait_time_between_slides = 0.05
+        self.add(Text("35", color=BLACK, font_size=SLIDE_NUMBER_FONTSIZE).to_corner(DR))
+
+        background = Square(15, fill_color=WHITE, fill_opacity=1.0, z_index=-1)
+        self.add(background)
+        group = ImageMobject('images/group_picture.jpg')
+        self.add(group)
+        self.play(Wait())
+        self.next_slide()
+
+        self.remove(group)
+        self.play(Wait())
+        self.next_slide()
+
+        typst = ImageMobject('images/typst.png', z_index=2).scale(0.7)
+        _3b1b  = ImageMobject('images/sanderson.jpeg', z_index=2).scale(2)
+        Group(_3b1b, typst).arrange(RIGHT)
+        text = Text(
+            'Grant Sanderson',
+            font='Open Sans',
+            font_size=200,
+            color=BLACK,
+            z_index=3,
+        ).scale(0.1 * 3 / 2).next_to(_3b1b, DOWN)
+        self.play(FadeIn(_3b1b), FadeIn(text), run_time=0.5)
+        self.next_slide()
+
+        text = Text(
+            'Typst',
+            font='Open Sans',
+            font_size=200,
+            color=BLACK,
+            z_index=3,
+        ).scale(0.1 * 3 / 2).next_to(typst, DOWN)
+        self.play(FadeIn(typst), FadeIn(text), run_time=0.5)
+        self.next_slide()
